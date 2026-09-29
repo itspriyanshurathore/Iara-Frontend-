@@ -695,36 +695,18 @@ export function JournalDetail({ journal }) {
 
           <div
             className="
-              relative z-10
-              grid gap-8
-              lg:grid-cols-[minmax(0,1fr)_220px]
-              lg:items-center
+               relative z-10
+    grid
+    grid-cols-[minmax(0,1fr)_240px]
+    items-start
+    gap-10
+    max-[750px]:grid-cols-1
+    max-[750px]:gap-7
             "
           >
-            {/* Journal Image */}
-            {journal.image && (
-              <div
-                className="
-                  order-first relative
-                  h-64 overflow-hidden
-                  rounded-2xl
-                  border border-[#012D68]/10
-                  bg-[#F7F9FC]
-                  lg:order-last lg:h-72
-                "
-              >
-                <Image
-                  src={journal.image}
-                  alt={`${journal.title} cover`}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 220px"
-                  className="object-cover"
-                />
-              </div>
-            )}
-
-            {/* Journal Title */}
-            <div>
+            {/* LEFT COLUMN */}
+           <div className="min-w-0 pt-7 max-[750px]:pt-0">
+              {/* Label */}
               <p
                 className="
                   mb-3 flex items-center
@@ -734,10 +716,11 @@ export function JournalDetail({ journal }) {
                 "
               >
                 <BookOpen className="size-4" />
-                IARA Journal
+                Journal Deatils  
               </p>
 
-              <h1
+              {/* Journal Title */}
+              <h4
                 className="
                   max-w-4xl
                   font-[Fraunces]
@@ -749,7 +732,7 @@ export function JournalDetail({ journal }) {
                 "
               >
                 {journal.title}
-              </h1>
+              </h4>
 
               {/* Basic Journal Information */}
               <div
@@ -769,47 +752,81 @@ export function JournalDetail({ journal }) {
                   Active since {journal.publishing_since}
                 </span>
               </div>
+
+              {/* INDEXING LOGOS */}
+              {journal.indexings?.length > 0 && (
+                <div className="mt-7">
+                  <p
+                    className="
+                      mb-3
+                      text-[10px]
+                      font-bold
+                      uppercase
+                      tracking-[0.16em]
+                      text-[#D69B23]
+                    "
+                  >
+                    Indexed In
+                  </p>
+
+<div className="flex flex-wrap items-center gap-4">
+  {journal.indexings.map((indexing) => (
+    <div
+      key={indexing.id}
+      title={indexing.name}
+      className="flex items-center justify-center"
+    >
+      {indexing.cover ? (
+        <Image
+          src={indexing.cover}
+          alt={indexing.name}
+          width={100}
+          height={50}
+          className="h-12 w-auto object-contain"
+        />
+      ) : (
+        <span className="text-[11px] font-semibold text-[#012D68]">
+          {indexing.name}
+        </span>
+      )}
+    </div>
+  ))}
+</div>
+                </div>
+              )}
             </div>
+
+            {/* RIGHT COLUMN — JOURNAL IMAGE */}
+            {journal.image && (
+              <div
+                className="
+                  relative
+    mx-auto
+    h-[330px]
+    w-[240px]
+    overflow-hidden
+    rounded-2xl
+    border border-[#012D68]/10
+    bg-[#F7F9FC]
+    max-[750px]:h-[300px]
+    max-[750px]:w-[215px]
+                "
+              >
+                <Image
+                  src={journal.image}
+                  alt={`${journal.title} cover`}
+                  fill
+                  sizes="230px"
+                  className="object-cover"
+                />
+              </div>
+            )}
           </div>
         </div>
 
         <div className="p-8 max-[600px]:p-5">
           {/* Bibliographic Information */}
           <section>
-            {/* <div className="mb-5 flex items-center gap-3">
-              <div
-                className="
-                  flex h-10 w-10
-                  items-center justify-center
-                  rounded-xl
-                  bg-[#012D68]
-                "
-              >
-                <BookMarked className="size-5 text-[#F7C23F]" />
-              </div>
-
-              <div>
-                <p
-                  className="
-                    text-xs font-semibold
-                    uppercase tracking-[0.15em]
-                    text-[#D69B23]
-                  "
-                >
-                  Journal Details
-                </p>
-
-                <h2
-                  className="
-                    text-xl font-semibold
-                    text-[#012D68]
-                  "
-                >
-                  Bibliographic Information
-                </h2>
-              </div>
-            </div> */}
-
             <div
               className="
                 overflow-hidden rounded-2xl
@@ -832,7 +849,9 @@ export function JournalDetail({ journal }) {
                     ISSN / E-ISSN
                   </dt>
 
-                  <dd className="leading-6 text-slate-600">{journal.issn}</dd>
+                  <dd className="leading-6 text-slate-600">
+                    {journal.issn}
+                  </dd>
                 </div>
 
                 {/* Publisher */}
@@ -846,7 +865,9 @@ export function JournalDetail({ journal }) {
                     max-[650px]:gap-1
                   "
                 >
-                  <dt className="font-semibold text-[#012D68]">Publisher</dt>
+                  <dt className="font-semibold text-[#012D68]">
+                    Publisher
+                  </dt>
 
                   <dd className="leading-6 text-slate-600">
                     {journal.publisher}
@@ -864,10 +885,16 @@ export function JournalDetail({ journal }) {
                     max-[650px]:gap-1
                   "
                 >
-                  <dt className="font-semibold text-[#012D68]">Active Years</dt>
+                  <dt className="font-semibold text-[#012D68]">
+                    Active Years
+                  </dt>
 
                   <dd className="leading-6 text-slate-600">
-                    {Number(journal.publishing_since) ? new Date().getFullYear() - Number(journal.publishing_since) + 1 : "N/A"}
+                    {Number(journal.publishing_since)
+                      ? new Date().getFullYear() -
+                          Number(journal.publishing_since) +
+                        1
+                      : "N/A"}
                   </dd>
                 </div>
 
@@ -882,7 +909,9 @@ export function JournalDetail({ journal }) {
                     max-[650px]:gap-1
                   "
                 >
-                  <dt className="font-semibold text-[#012D68]">Language</dt>
+                  <dt className="font-semibold text-[#012D68]">
+                    Language
+                  </dt>
 
                   <dd className="leading-6 text-slate-600">
                     {journal.language}
@@ -901,7 +930,9 @@ export function JournalDetail({ journal }) {
                       max-[650px]:gap-1
                     "
                   >
-                    <dt className="font-semibold text-[#012D68]">Scopus</dt>
+                    <dt className="font-semibold text-[#012D68]">
+                      Scopus
+                    </dt>
 
                     <dd className="leading-6">
                       <a
@@ -922,7 +953,7 @@ export function JournalDetail({ journal }) {
                   </div>
                 )}
 
-                {/* {Aim & Scope} */}
+                {/* Aim & Scope */}
                 <div
                   className="
                     grid grid-cols-[200px_1fr]
@@ -933,51 +964,29 @@ export function JournalDetail({ journal }) {
                     max-[650px]:gap-1
                   "
                 >
-                  <dt className="font-semibold text-[#012D68]">Aim & Scope</dt>
+                  <dt className="font-semibold text-[#012D68]">
+                    Aim & Scope
+                  </dt>
 
                   <dd className="leading-6 text-slate-600">
                     <div>
-                      <p><b>Aim: </b>{journal.aim}</p>
-                      <br/>
-                      <p><b>Scope: </b>{journal.scope}</p>
+                      <p>
+                        <b>Aim: </b>
+                        {journal.aim}
+                      </p>
+
+                      <br />
+
+                      <p>
+                        <b>Scope: </b>
+                        {journal.scope}
+                      </p>
                     </div>
-                    </dd>
+                  </dd>
                 </div>
               </dl>
             </div>
           </section>
-
-          {/* About the Journal */}
-          {/* <section
-            className="
-              mt-9 border-t
-              border-[#012D68]/10
-              pt-8
-            "
-          >
-            <h2
-              className="
-                mb-5 text-2xl
-                font-semibold text-[#012D68]
-              "
-            >
-              Aim & Scope
-            </h2>
-
-            <div
-              className="
-                rounded-2xl
-                border border-[#012D68]/10
-                bg-[#012D68]/[0.025]
-                p-6
-                text-[0.95rem]
-                leading-8
-                text-slate-600
-              "
-            >
-              {journal.about || "Information about this journal is currently unavailable."}
-            </div>
-          </section> */}
         </div>
       </article>
     </JournalShell>

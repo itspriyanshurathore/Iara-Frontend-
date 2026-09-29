@@ -21,19 +21,26 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* <Script id="ACXConnectScript" type="text/javascript" src="https://app.sendmails.io/websites/67d29ad9aaf07/connect.js">
+      {/* <Script
+        id="ACXConnectScript"
+        type="text/javascript"
+        src="https://app.sendmails.io/websites/67d29ad9aaf07/connect.js"
+      >
       </Script> */}
+
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-         <Script 
-          id="ACXConnectScript" 
+        <Script
+          id="ACXConnectScript"
           strategy="beforeInteractive"
           src="https://app.sendmails.io/websites/67d29ad9aaf07/connect.js"
         />
-       <UserProvider>
-       {children}
-       </UserProvider>
+
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   );

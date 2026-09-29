@@ -1,6 +1,5 @@
 "use client";
 
-
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
@@ -56,35 +55,36 @@ export function JournalFilterSidebar({
 
   const fetchJournalCategories = async () => {
     try {
-      const response = (await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/categories`));
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/categories`,
+      );
       if (response) {
-        setJournalCategories(response.data)
-      }
-      else toast(response.message)
+        setJournalCategories(response.data);
+      } else toast(response.message);
     } catch (err) {
-      console.log(err)
-      toast("Failed to load categories")
+      console.log(err);
+      toast("Failed to load categories");
     }
-  }
+  };
 
   const fetchIndexingOptions = async () => {
     try {
-      const response = (await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/indexing`));
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/indexing`,
+      );
       if (response) {
-        setIndexingOptions(response.data)
-      }
-      else toast(response.message)
+        setIndexingOptions(response.data);
+      } else toast(response.message);
     } catch (err) {
-      console.log(err)
-      toast("Failed to load indexing")
+      console.log(err);
+      toast("Failed to load indexing");
     }
-  }
+  };
 
   useEffect(() => {
     fetchJournalCategories();
     fetchIndexingOptions();
-  }, [])
-
+  }, []);
 
   return (
     <aside>
@@ -141,7 +141,7 @@ export function JournalFilterSidebar({
             Domain Based
           </p>
 
-          {navigationMode ? (
+          {navigationMode ?
             <Link
               href="/associated-journals"
               className={`
@@ -150,17 +150,17 @@ export function JournalFilterSidebar({
       rounded-xl px-3 py-2.5
       text-left text-sm
       transition-all
-      ${subjectFilter === "all"
-                  ? "bg-[#012D68] text-white"
-                  : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
-                }
+      ${
+        subjectFilter === "all" ?
+          "bg-[#012D68] text-white"
+        : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
+      }
     `}
             >
               All Journals
               <ChevronRight className="size-4" />
             </Link>
-          ) : (
-            <button
+          : <button
               type="button"
               onClick={() => setSubjectFilter("all")}
               className={`
@@ -169,19 +169,20 @@ export function JournalFilterSidebar({
       rounded-xl px-3 py-2.5
       text-left text-sm
       transition-all
-      ${subjectFilter === "all"
-                  ? "bg-[#012D68] text-white"
-                  : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
-                }
+      ${
+        subjectFilter === "all" ?
+          "bg-[#012D68] text-white"
+        : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
+      }
     `}
             >
               All Journals
               <ChevronRight className="size-4" />
             </button>
-          )}
+          }
 
           {journalCategories.map((subject) =>
-            navigationMode ? (
+            navigationMode ?
               <Link
                 key={subject.slug}
                 href={`/associated-journals?category=${subject.slug}`}
@@ -192,10 +193,11 @@ export function JournalFilterSidebar({
         rounded-xl px-3 py-2.5
         text-left text-[13px]
         transition-all
-        ${subjectFilter === subject.slug
-                    ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
-                    : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
-                  }
+        ${
+          subjectFilter === subject.slug ?
+            "bg-[#D69B23]/10 font-semibold text-[#012D68]"
+          : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
+        }
       `}
               >
                 {subject.title}
@@ -203,15 +205,13 @@ export function JournalFilterSidebar({
                 <ChevronRight
                   className={`
           size-3.5
-          ${subjectFilter === subject.slug
-                      ? "text-[#D69B23]"
-                      : "text-slate-300"
-                    }
+          ${
+            subjectFilter === subject.slug ? "text-[#D69B23]" : "text-slate-300"
+          }
         `}
                 />
               </Link>
-            ) : (
-              <button
+            : <button
                 key={subject.slug}
                 type="button"
                 onClick={() => setSubjectFilter(subject.slug)}
@@ -222,10 +222,11 @@ export function JournalFilterSidebar({
         rounded-xl px-3 py-2.5
         text-left text-[13px]
         transition-all
-        ${subjectFilter === subject.slug
-                    ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
-                    : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
-                  }
+        ${
+          subjectFilter === subject.slug ?
+            "bg-[#D69B23]/10 font-semibold text-[#012D68]"
+          : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
+        }
       `}
               >
                 {subject.title}
@@ -233,14 +234,12 @@ export function JournalFilterSidebar({
                 <ChevronRight
                   className={`
           size-3.5
-          ${subjectFilter === subject.slug
-                      ? "text-[#D69B23]"
-                      : "text-slate-300"
-                    }
+          ${
+            subjectFilter === subject.slug ? "text-[#D69B23]" : "text-slate-300"
+          }
         `}
                 />
-              </button>
-            )
+              </button>,
           )}
         </div>
 
@@ -257,7 +256,7 @@ export function JournalFilterSidebar({
             Indexing Based
           </p>
 
-          {navigationMode ? (
+          {navigationMode ?
             <Link
               href="/associated-journals"
               className={`
@@ -265,17 +264,17 @@ export function JournalFilterSidebar({
       items-center justify-between
       rounded-xl px-3 py-2.5
       text-sm
-      ${indexFilter === "all"
-                  ? "bg-[#012D68] text-white"
-                  : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-                }
+      ${
+        indexFilter === "all" ?
+          "bg-[#012D68] text-white"
+        : "text-slate-500 hover:bg-[#012D68]/[0.05]"
+      }
     `}
             >
               All Indexing
               <Database className="size-4" />
             </Link>
-          ) : (
-            <button
+          : <button
               type="button"
               onClick={() => setIndexFilter("all")}
               className={`
@@ -283,19 +282,20 @@ export function JournalFilterSidebar({
       items-center justify-between
       rounded-xl px-3 py-2.5
       text-sm
-      ${indexFilter === "all"
-                  ? "bg-[#012D68] text-white"
-                  : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-                }
+      ${
+        indexFilter === "all" ?
+          "bg-[#012D68] text-white"
+        : "text-slate-500 hover:bg-[#012D68]/[0.05]"
+      }
     `}
             >
               All Indexing
               <Database className="size-4" />
             </button>
-          )}
+          }
 
           {indexingOptions.map((indexing) =>
-            navigationMode ? (
+            navigationMode ?
               <Link
                 key={indexing}
                 href={`/associated-journals?indexing=${encodeURIComponent(indexing)}`}
@@ -304,17 +304,17 @@ export function JournalFilterSidebar({
         items-center justify-between
         rounded-xl px-3 py-2.5
         text-sm transition-all
-        ${indexFilter === indexing
-                    ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
-                    : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-                  }
+        ${
+          indexFilter === indexing ?
+            "bg-[#D69B23]/10 font-semibold text-[#012D68]"
+          : "text-slate-500 hover:bg-[#012D68]/[0.05]"
+        }
       `}
               >
                 {indexing}
                 <Database className="size-3.5 text-[#D69B23]" />
               </Link>
-            ) : (
-              <button
+            : <button
                 key={indexing}
                 type="button"
                 onClick={() => setIndexFilter(indexing)}
@@ -323,16 +323,16 @@ export function JournalFilterSidebar({
         items-center justify-between
         rounded-xl px-3 py-2.5
         text-sm transition-all
-        ${indexFilter === indexing
-                    ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
-                    : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-                  }
+        ${
+          indexFilter === indexing ?
+            "bg-[#D69B23]/10 font-semibold text-[#012D68]"
+          : "text-slate-500 hover:bg-[#012D68]/[0.05]"
+        }
       `}
               >
                 {indexing}
                 <Database className="size-3.5 text-[#D69B23]" />
-              </button>
-            )
+              </button>,
           )}
         </div>
 
@@ -395,9 +395,7 @@ export function JournalShell({ children }) {
         "
       />
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        {children}
-      </div>
+      <div className="relative z-10 mx-auto max-w-7xl">{children}</div>
     </section>
   );
 }
@@ -412,45 +410,51 @@ export function JournalDirectory({ category, indexing }) {
 
   const fetchJournals = async () => {
     try {
-      const response = (await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/`));
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/`,
+      );
       if (response) {
-        setJournals(response.data)
-      }
-      else toast(response.message)
+        setJournals(response.data);
+      } else toast(response.message);
     } catch (err) {
-      console.log(err)
-      toast("Failed to load journals")
+      console.log(err);
+      toast("Failed to load journals");
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchJournals();
-  },[])
-
+  }, []);
 
   const visibleJournals = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    return journals.filter((journal) => {
-      const subjectMatch =
-        subjectFilter === "all" ||
-        journal.category?.slug === subjectFilter;
+    return journals
+      .filter((journal) => {
+        const subjectMatch =
+          subjectFilter === "all" || journal.category?.slug === subjectFilter;
 
-      const indexingMatch =
-        indexFilter === "all" ||
-        journal.indexings.filter((indexing)=>indexing.name==indexFilter).length;
+        const indexingMatch =
+          indexFilter === "all" ||
+          journal.indexings.filter((indexing) => indexing.name == indexFilter)
+            .length;
 
-      const searchMatch =
-        !query ||
-        journal.title?.toLowerCase().includes(query) ||
-        journal.issn?.toLowerCase().includes(query) ||
-        journal.publisher?.toLowerCase().includes(query) ||
-        journal.indexings?.some((item) =>
-          item.toLowerCase().includes(query)
-        );
+        const searchMatch =
+          !query ||
+          journal.title?.toLowerCase().includes(query) ||
+          journal.issn?.toLowerCase().includes(query) ||
+          journal.publisher?.toLowerCase().includes(query) ||
+          String(journal.publishing_since || "").includes(query) ||
+          journal.indexings?.some((item) =>
+            item.name?.toLowerCase().includes(query),
+          );
 
-      return subjectMatch && indexingMatch && searchMatch;
-    });
+        return subjectMatch && indexingMatch && searchMatch;
+      })
+      .sort(
+        (a, b) =>
+          Number(b.publishing_since || 0) - Number(a.publishing_since || 0),
+      );
   }, [journals, search, subjectFilter, indexFilter]);
 
   function clearFilters() {
@@ -466,53 +470,50 @@ export function JournalDirectory({ category, indexing }) {
             HEADER
         ================================= */}
 
-        <div className="mb-9">
-          <span
-            className="
-              mb-3 inline-block
-              text-[11px] font-bold
-              uppercase
-              tracking-[0.2em]
-              text-[#D69B23]
-            "
-          >
-            IARA PUBLICATION
-          </span>
+      <div className="mb-7 text-center">
+  <span
+    className="
+      mb-2 inline-block
+      text-[11px] font-semibold
+      uppercase
+      tracking-[0.2em]
+      text-[#D69B23]
+    "
+  >
+    IARA PUBLICATION
+  </span>
 
-          <h1
-            className="
-              font-[Fraunces]
-              text-[clamp(2.6rem,5vw,4.8rem)]
-              font-medium
-              leading-[1]
-              tracking-[-0.045em]
-              text-[#012D68]
-            "
-          >
-            Associated Journals
-            <br />
-            <em
-              className="
-                font-normal
-                text-[#D69B23]
-              "
-            >
-              with IARA.
-            </em>
-          </h1>
+  <h1
+    className="
+      whitespace-nowrap
+      font-italic
+      text-[clamp(2.2rem,5vw,4.8rem)]
+      font-medium
+      leading-none
+      tracking-[-0.045em]
+      text-[#012D68]
+    "
+  >
+    Associated Journals{" "}
+    <em className="font-normal text-[#D69B23]">
+      with IARA.
+    </em>
+  </h1>
 
-          <p
-            className="
-              mt-5 max-w-2xl
-              text-[15px]
-              leading-7
-              text-slate-500
-            "
-          >
-            Search and explore associated journals by subject area, ISSN,
-            publisher and indexing database.
-          </p>
-        </div>
+  <p
+    className="
+      mx-auto
+      mt-3
+      max-w-2xl
+      text-[15px]
+      leading-6
+      text-slate-500
+    "
+  >
+    Search and explore associated journals by subject area, ISSN,
+    publisher and indexing database.
+  </p>
+</div>
 
         {/* =================================
             SEARCH AREA
@@ -628,6 +629,7 @@ export function JournalDirectory({ category, indexing }) {
             {[
               "Journal Name",
               "ISSN",
+              "Year",
               "Subject Area",
               "Indexing",
               "Publisher",
@@ -672,7 +674,6 @@ export function JournalDirectory({ category, indexing }) {
             setIndexFilter={setIndexFilter}
             clearFilters={clearFilters}
           />
-
 
           {/* =================================
               RIGHT JOURNAL RESULTS
