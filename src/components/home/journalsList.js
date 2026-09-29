@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 
@@ -18,63 +20,61 @@ import {
   BookMarked,
   ChevronRight,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-export const journalCategories = [
-  {
-    slug: "environment-science-technology",
-    title: "Environment Science & Technology",
-  },
-  { slug: "management", title: "Management Journals" },
-  { slug: "medical", title: "Medical Journals" },
-  { slug: "nursing", title: "Nursing Journals" },
-  { slug: "pharmacy", title: "Pharmacy Journals" },
-  { slug: "science", title: "Science Journals" },
-  { slug: "social-science", title: "Social Science Journals" },
-  { slug: "technology", title: "Technology Journals" },
-];
+// export const journalCategories = [
+//   {
+//     slug: "environment-science-technology",
+//     title: "Environment Science & Technology",
+//   },
+//   { slug: "management", title: "Management Journals" },
+//   { slug: "medical", title: "Medical Journals" },
+//   { slug: "nursing", title: "Nursing Journals" },
+//   { slug: "pharmacy", title: "Pharmacy Journals" },
+//   { slug: "science", title: "Science Journals" },
+//   { slug: "social-science", title: "Social Science Journals" },
+//   { slug: "technology", title: "Technology Journals" },
+// ];
 
-export const journals = [
-  {
-    slug: "international-journal-agriculture-environment-sustainability",
-    title:
-      "International Journal of Agriculture, Environment and Sustainability",
-    category: "environment-science-technology",
-    publisher: "Advanced Research Publications",
-    frequency: "Biannual",
-    publishingSince: "2019",
-    origin: "India",
-    language: "English",
-    website: "https://www.advancedresearchpublications.com",
-    address:
-      "Unit No. 826, Tower A, Anthurium Sector 73, Noida, Pin Code - 201307, India.",
-    editor: "Dr. Bishnu Prasad Mishra",
-    affiliation:
-      "Prof. and Director (R&D), Department of Mechanical Engineering (Dairy Engg, Food Engg, Production Engg), GITA Autonomous College, Bhubaneswar, Odisha, India.",
-    aim: "The journal aims at creating a platform for agricultural engineers, teachers, professionals, and organisations seeking innovative knowledge, developments, latest trends and solutions to current and upcoming challenges in agriculture keeping in view environmental issues and sustainability by sharing and discussing stimulating, latest and innovative articles focusing on high-quality research.",
-    scope:
-      "The scope of the journal covers research articles, review articles, methodology articles, short communications, case study / case reports, research reports, monographs, special issues, editorials research articles, reviews, short communications and scientific commentaries in all the areas of agriculture science and technology.",
-    indexing:
-      "ISA, DRJI, ESJI, Jour informatics, SIS, BASE, IFSJ, JSTOR, Infobase index, OAJI.",
-  },
-  {
-    slug: "journal-advanced-research-agriculture-science-technology",
-    title: "Journal of Advanced Research in Agriculture Science and Technology",
-    category: "environment-science-technology",
-    publisher: "Advanced Research Publications",
-    frequency: "Biannual",
-    publishingSince: "2020",
-    origin: "India",
-    language: "English",
-    website: "https://www.advancedresearchpublications.com",
-    address: "Noida, India.",
-    editor: "Editorial Board",
-    affiliation: "Advanced Research Publications.",
-    aim: "A platform for researchers and practitioners to share original work in agriculture science and technology.",
-    scope:
-      "Research articles, reviews, case studies and technical communications related to agriculture and allied sciences.",
-    indexing: "Directory and academic indexing services.",
-  },
-];
+// export const journals = [
+//   {
+//     slug: "international-journal-agriculture-environment-sustainability",
+//     title: "International Journal of Agriculture, Environment and Sustainability",
+//     category: "environment-science-technology",
+//     publisher: "Advanced Research Publications",
+//     frequency: "Biannual",
+//     publishingSince: "2019",
+//     origin: "India",
+//     language: "English",
+//     website: "https://www.advancedresearchpublications.com",
+//     address: "Unit No. 826, Tower A, Anthurium Sector 73, Noida, Pin Code - 201307, India.",
+//     editor: "Dr. Bishnu Prasad Mishra",
+//     affiliation: "Prof. and Director (R&D), Department of Mechanical Engineering (Dairy Engg, Food Engg, Production Engg), GITA Autonomous College, Bhubaneswar, Odisha, India.",
+//     aim: "The journal aims at creating a platform for agricultural engineers, teachers, professionals, and organisations seeking innovative knowledge, developments, latest trends and solutions to current and upcoming challenges in agriculture keeping in view environmental issues and sustainability by sharing and discussing stimulating, latest and innovative articles focusing on high-quality research.",
+//     scope: "The scope of the journal covers research articles, review articles, methodology articles, short communications, case study / case reports, research reports, monographs, special issues, editorials research articles, reviews, short communications and scientific commentaries in all the areas of agriculture science and technology.",
+//     indexing: "ISA, DRJI, ESJI, Jour informatics, SIS, BASE, IFSJ, JSTOR, Infobase index, OAJI.",
+//   },
+//   {
+//     slug: "journal-advanced-research-agriculture-science-technology",
+//     title: "Journal of Advanced Research in Agriculture Science and Technology",
+//     category: "environment-science-technology",
+//     publisher: "Advanced Research Publications",
+//     frequency: "Biannual",
+//     publishingSince: "2020",
+//     origin: "India",
+//     language: "English",
+//     website: "https://www.advancedresearchpublications.com",
+//     address: "Noida, India.",
+//     editor: "Editorial Board",
+//     affiliation: "Advanced Research Publications.",
+//     aim: "A platform for researchers and practitioners to share original work in agriculture science and technology.",
+//     scope:
+//       "Research articles, reviews, case studies and technical communications related to agriculture and allied sciences.",
+//     indexing: "Directory and academic indexing services.",
+//   },
+// ];
 
 // export function JournalSidebar({ activeCategory }) {
 //   return (
@@ -282,16 +282,49 @@ export function JournalShell({ children }) {
         "
       />
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        {children}
-      </div>
+      <div className="relative z-10 mx-auto max-w-7xl">{children}</div>
     </section>
   );
 }
 
 export function JournalDirectory({ category }) {
+
+  const [journalCategories, setJournalCategories] = useState([]);
+  const [journals, setJournals] = useState([]);
+
+  const fetchJournalCategories = async () => {
+    try {
+      const response = (await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/categories`));
+      if (response) {
+        setJournalCategories(response.data)
+      }
+      else toast(response.message)
+    } catch (err) {
+      console.log(err)
+      toast("Failed to load categories")
+    }
+  }
+  
+  const fetchJournals = async () => {
+    try {
+      const response = (await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/`));
+      if (response) {
+        setJournals(response.data)
+      }
+      else toast(response.message)
+    } catch (err) {
+      console.log(err)
+      toast("Failed to load journals")
+    }
+  }
+
+  useEffect(()=>{
+    fetchJournalCategories();
+    fetchJournals();
+  },[])
+
   const selectedCategory = journalCategories.find(
-    (item) => item.slug === category
+    (item) => item === category
   );
 
   const visibleJournals = category
@@ -300,7 +333,6 @@ export function JournalDirectory({ category }) {
 
   return (
     <JournalShell activeCategory={category}>
-
       {/* Hero heading */}
       <div
         className="
@@ -451,11 +483,7 @@ export function JournalDirectory({ category }) {
       {/* Journals */}
       <div className="grid gap-5">
         {visibleJournals.map((journal, index) => (
-          <JournalCard
-            key={journal.slug}
-            journal={journal}
-            index={index}
-          />
+          <JournalCard key={journal.slug} journal={journal} index={index} />
         ))}
 
         {visibleJournals.length === 0 && (
@@ -542,7 +570,6 @@ function JournalCard({ journal, index }) {
         "
       >
         <div className="min-w-0 flex-1">
-
           {/* Category tag */}
           <div
             className="
@@ -739,7 +766,7 @@ export function JournalDetail({ journal }) {
 
                 <span className="flex items-center gap-2">
                   <CalendarDays className="size-4 text-[#D69B23]" />
-                  Active since {journal.ActiveYears}
+                  Active since {journal.publishing_since}
                 </span>
               </div>
             </div>
@@ -747,7 +774,6 @@ export function JournalDetail({ journal }) {
         </div>
 
         <div className="p-8 max-[600px]:p-5">
-
           {/* Bibliographic Information */}
           <section>
             {/* <div className="mb-5 flex items-center gap-3">
@@ -791,7 +817,6 @@ export function JournalDetail({ journal }) {
               "
             >
               <dl>
-
                 {/* ISSN */}
                 <div
                   className="
@@ -807,9 +832,7 @@ export function JournalDetail({ journal }) {
                     ISSN / E-ISSN
                   </dt>
 
-                  <dd className="leading-6 text-slate-600">
-                    {journal.issn}
-                  </dd>
+                  <dd className="leading-6 text-slate-600">{journal.issn}</dd>
                 </div>
 
                 {/* Publisher */}
@@ -823,9 +846,7 @@ export function JournalDetail({ journal }) {
                     max-[650px]:gap-1
                   "
                 >
-                  <dt className="font-semibold text-[#012D68]">
-                    Publisher
-                  </dt>
+                  <dt className="font-semibold text-[#012D68]">Publisher</dt>
 
                   <dd className="leading-6 text-slate-600">
                     {journal.publisher}
@@ -843,12 +864,10 @@ export function JournalDetail({ journal }) {
                     max-[650px]:gap-1
                   "
                 >
-                  <dt className="font-semibold text-[#012D68]">
-                    Active Years
-                  </dt>
+                  <dt className="font-semibold text-[#012D68]">Active Years</dt>
 
                   <dd className="leading-6 text-slate-600">
-                    {journal.ActiveYears}
+                    {Number(journal.publishing_since) ? new Date().getFullYear() - Number(journal.publishing_since) + 1 : "N/A"}
                   </dd>
                 </div>
 
@@ -863,9 +882,7 @@ export function JournalDetail({ journal }) {
                     max-[650px]:gap-1
                   "
                 >
-                  <dt className="font-semibold text-[#012D68]">
-                    Language
-                  </dt>
+                  <dt className="font-semibold text-[#012D68]">Language</dt>
 
                   <dd className="leading-6 text-slate-600">
                     {journal.language}
@@ -884,9 +901,7 @@ export function JournalDetail({ journal }) {
                       max-[650px]:gap-1
                     "
                   >
-                    <dt className="font-semibold text-[#012D68]">
-                      Scopus
-                    </dt>
+                    <dt className="font-semibold text-[#012D68]">Scopus</dt>
 
                     <dd className="leading-6">
                       <a
@@ -918,18 +933,16 @@ export function JournalDetail({ journal }) {
                     max-[650px]:gap-1
                   "
                 >
-                  <dt className="font-semibold text-[#012D68]">
-                    Aim & Scope
-                  </dt>
+                  <dt className="font-semibold text-[#012D68]">Aim & Scope</dt>
 
                   <dd className="leading-6 text-slate-600">
-                    {journal.Aim}
-                  </dd>
+                    <div>
+                      <p><b>Aim: </b>{journal.aim}</p>
+                      <br/>
+                      <p><b>Scope: </b>{journal.scope}</p>
+                    </div>
+                    </dd>
                 </div>
-                
-
-
-
               </dl>
             </div>
           </section>
@@ -965,7 +978,6 @@ export function JournalDetail({ journal }) {
               {journal.about || "Information about this journal is currently unavailable."}
             </div>
           </section> */}
-
         </div>
       </article>
     </JournalShell>

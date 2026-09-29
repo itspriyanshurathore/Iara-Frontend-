@@ -1,23 +1,26 @@
 import { JournalDetail } from "@/components/home/journalsList";
 import { JournalFilterSidebar } from "@/components/home/associatedJournals";
-import { associatedJournals } from "@/lib/associatedJournalData";
 
 import Footer from "@/components/utils/footer";
 import { Header } from "@/components/utils/header";
 import { notFound } from "next/navigation";
+import axios from "axios";
 
-export function generateStaticParams() {
-  return associatedJournals.map((journal) => ({
-    journalId: journal.slug,
-  }));
-}
 
 export default async function AssociatedJournalDetailPage({ params }) {
   const { journalId } = await params;
 
-  const journal = associatedJournals.find(
-    (item) => item.slug === journalId
-  );
+  let journal = null;
+
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/journal/${journalId}/`
+    );
+
+    journal = response.data;
+  } catch (error) {
+    console.error(`Error fetching journal ${journalId}:`, error?.response?.status || error.message);
+  }
 
   if (!journal) {
     notFound();
