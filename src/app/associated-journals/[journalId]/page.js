@@ -6,7 +6,6 @@ import { Header } from "@/components/utils/header";
 import { notFound } from "next/navigation";
 import axios from "axios";
 
-
 export default async function AssociatedJournalDetailPage({ params }) {
   const { journalId } = await params;
 
@@ -19,7 +18,10 @@ export default async function AssociatedJournalDetailPage({ params }) {
 
     journal = response.data;
   } catch (error) {
-    console.error(`Error fetching journal ${journalId}:`, error?.response?.status || error.message);
+    console.error(
+      `Error fetching journal ${journalId}:`,
+      error?.response?.status || error.message
+    );
   }
 
   if (!journal) {
@@ -35,11 +37,14 @@ export default async function AssociatedJournalDetailPage({ params }) {
           className="
             mx-auto
             grid
-            max-w-7xl
-            grid-cols-[280px_1fr]
-            gap-7
-            px-[6%]
-            py-16
+            w-full
+            max-w-[1450px]
+            grid-cols-[280px_minmax(0,1fr)]
+            items-start
+            gap-6
+            px-[3%]
+            pt-4
+            pb-10
             max-[900px]:grid-cols-1
           "
         >

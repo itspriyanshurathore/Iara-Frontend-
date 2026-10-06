@@ -105,467 +105,751 @@ export function HeroSection() {
   // });
   return (
     <>
-      <section style={{ marginTop: 40, fontFamily: "Inter, sans-serif" }}>
-        <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
-        @keyframes rise {
-          from { opacity: 0; transform: translateY(14px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fanIn {
-          from { opacity: 0; transform: translateY(30px) scale(0.94); }
-          to { opacity: 1; }
-        }
-        @keyframes floaty {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-9px); }
-        }
-        .rise { opacity: 0; animation: rise .7s cubic-bezier(.2,.8,.2,1) forwards; }
-        .rise-line { display:block; transform: translateY(110%); animation: rise .85s cubic-bezier(.2,.8,.2,1) forwards; }
-      `}</style>
-
-        <div
-          style={{
-            position: "relative",
-            display: "grid",
-            gridTemplateColumns: "1.05fr 0.95fr",
-            alignItems: "center",
-            gap: "48px",
-            background: "#F7F3EA",
-            padding: "80px 5%",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: 0,
-              opacity: 0.5,
-              pointerEvents: "none",
-              backgroundImage:
-                "repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(22,33,58,0.14) 40px)",
-              WebkitMaskImage:
-                "linear-gradient(180deg, transparent, rgba(0,0,0,.35) 40%, transparent 85%)",
-              maskImage:
-                "linear-gradient(180deg, transparent, rgba(0,0,0,.35) 40%, transparent 85%)",
-            }}
-          />
-
-          {/* <div
-            className="rise"
-            style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 32, animationDelay: ".1s" }}
-          >
-            <div
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: "50%",
-                border: "1.5px solid #16213A",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "Fraunces, serif",
-                fontWeight: 600,
-                fontSize: 13,
-                color: "#16213A",
-                flexShrink: 0,
-              }}
-            >
-              IA
-            </div>
-            <span style={{ fontSize: 13, letterSpacing: "0.03em", color: "#3A4358" }}>
-              IARA Publication â€” Advanced Research Publications
-            </span>
-          </div> */}
-
-          {/* left column */}
-          <div style={{ position: "relative" }}>
-            <h1
-              style={{
-                fontFamily: "Fraunces, serif",
-                fontWeight: 500,
-                fontSize: "clamp(2.5rem, 4.1vw, 3.6rem)",
-                lineHeight: 1.08,
-                letterSpacing: "-0.01em",
-                margin: "0 0 20px",
-                maxWidth: "11.5ch",
-                color: "#012D68",
-              }}
-            >
-              <span style={{ display: "block", overflow: "hidden" }}>
-                <span
-                  className="rise-line"
-                  style={{
-                    animationDelay: ".28s",
-                    display: "inline-block",
-                  }}
-                >
-                  Where research
-                </span>
-              </span>
-
-              <span style={{ display: "block", overflow: "hidden" }}>
-                <span
-                  className="rise-line"
-                  style={{
-                    animationDelay: ".4s",
-                    display: "inline-block",
-                  }}
-                >
-                  becomes{" "}
-                  <em
-                    style={{
-                      fontStyle: "italic",
-                      fontWeight: 400,
-                      color: "#D69B23",
-                      position: "relative",
-                      display: "inline-block",
-                      textShadow: "0 3px 10px rgba(214,155,35,0.12)",
-                    }}
-                  >
-                    reference.
-                    <span
-                      style={{
-                        position: "absolute",
-                        left: "5%",
-                        right: "5%",
-                        bottom: -4,
-                        height: 2,
-                        borderRadius: 10,
-                        background: "#D69B23",
-                        opacity: 0.65,
-                      }}
-                    />
-                  </em>
-                </span>
-              </span>
-            </h1>
-
-            <p
-              className="rise"
-              style={{
-                maxWidth: "42ch",
-                fontSize: "1.05rem",
-                lineHeight: 1.6,
-                color: "#475569",
-                margin: "0 0 34px",
-                animationDelay: ".56s",
-              }}
-            >
-              Editorial support,{" "}
-              <span style={{ color: "#012D68", fontWeight: 500 }}>
-                rigorous indexing
-              </span>
-              , and global distribution for scholars who publish once and get
-              cited for years.
-            </p>
-
-            <div
-              className="rise"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 22,
-                marginBottom: 52,
-                animationDelay: ".68s",
-              }}
-            >
-             {/* Primary Button */}
-<Link
-  href="/journals"
+    <section
+  className="hero-section"
   style={{
-    display: "inline-block",
-    cursor: "pointer",
-    borderRadius: 2,
-    border: "1px solid #012D68",
-    background: "#012D68",
-    color: "#FFFFFF",
-    padding: "13px 24px",
-    fontSize: "0.95rem",
-    fontWeight: 600,
     fontFamily: "Inter, sans-serif",
-    textDecoration: "none",
-    transition: "all .25s ease",
-  }}
-  onMouseEnter={(e) => {
-    e.currentTarget.style.background = "#D69B23";
-    e.currentTarget.style.borderColor = "#D69B23";
-    e.currentTarget.style.transform = "translateY(-2px)";
-    e.currentTarget.style.boxShadow =
-      "0 6px 18px rgba(1, 45, 104, 0.18)";
-  }}
-  onMouseLeave={(e) => {
-    e.currentTarget.style.background = "#012D68";
-    e.currentTarget.style.borderColor = "#012D68";
-    e.currentTarget.style.transform = "translateY(0)";
-    e.currentTarget.style.boxShadow = "none";
   }}
 >
-  Explore Journals
-</Link>
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
 
-            {/* Secondary Link */}
-<Link
-  href="/associated-journals"
-  style={{
-    position: "relative",
-    display: "inline-block",
-    cursor: "pointer",
-    background: "none",
-    border: "none",
-    color: "#012D68",
-    fontWeight: 600,
-    fontSize: "0.95rem",
-    fontFamily: "Inter, sans-serif",
-    padding: 0,
-    textDecoration: "none",
-    transition: "color .25s ease",
-  }}
-  onMouseEnter={(e) => {
-    e.currentTarget.style.color = "#D69B23";
-    e.currentTarget.querySelector("span").style.background = "#D69B23";
-  }}
-  onMouseLeave={(e) => {
-    e.currentTarget.style.color = "#012D68";
-    e.currentTarget.querySelector("span").style.background = "#012D68";
-  }}
->
-  See indexing partners
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fanIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.94);
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes floaty {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-9px);
+      }
+    }
+
+    .rise {
+      opacity: 0;
+      animation: rise .7s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    .rise-line {
+      display: block;
+      transform: translateY(110%);
+      animation: rise .85s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    .hero-main {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 48px;
+      background: #F7F3EA;
+      padding: 85px 5%;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      min-width: 0;
+    }
+
+    .hero-heading {
+      font-family: Fraunces, serif;
+      font-weight: 500;
+      font-size: clamp(2.5rem, 4.1vw, 3.6rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+     margin: 12px 0 20px;
+      max-width: 18ch;
+      color: #012D68;
+    }
+
+    .hero-description {
+      max-width: 42ch;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #475569;
+      margin: 0 0 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-bottom: 42px;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(1,45,104,0.14);
+      padding-top: 22px;
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(1,45,104,0.10);
+    }
+
+    .hero-researchers {
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      flex-shrink: 0;
+    }
+
+    .hero-researcher {
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 3px 10px rgba(1,45,104,0.14);
+      position: relative;
+      transition: all .3s ease;
+      cursor: pointer;
+    }
+
+    .hero-researcher + .hero-researcher {
+      margin-left: -9px;
+    }
+
+    .hero-image-wrap {
+      min-width: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      max-width: 500px;
+      display: block;
+    }
+
+    /* Tablet */
+    @media (max-width: 1024px) {
+      .hero-main {
+        grid-template-columns: 1fr 0.9fr;
+        gap: 30px;
+        padding: 55px 5%;
+      }
+
+      .hero-heading {
+        font-size: clamp(2.3rem, 5vw, 3.2rem);
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .hero-actions {
+        margin-bottom: 34px;
+      }
+
+      .hero-trust {
+        gap: 12px;
+      }
+
+      .hero-researcher {
+        width: 44px;
+        height: 44px;
+      }
+    }
+
+   /* Mobile */
+@media (max-width: 768px) {
+  .hero-main {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 105px 6% 45px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .hero-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-heading {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+    max-width: 12ch;
+    margin: 0 auto 16px;
+    text-align: center;
+  }
+
+  .hero-description {
+    max-width: 100%;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .hero-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .hero-stats {
+    gap: 14px 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stats > div {
+    margin-right: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .hero-trust {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+  }
+
+  .hero-researcher {
+    width: 42px;
+    height: 42px;
+  }
+
+  .hero-image-wrap {
+    width: 100%;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image {
+    max-width: min(500px, 90vw);
+    margin: 0 auto;
+  }
+}
+
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .hero-main {
+    gap: 26px;
+    padding: 105px 5% 38px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .hero-heading {
+    font-size: clamp(2rem, 10vw, 2.5rem);
+    line-height: 1.08;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-description {
+    font-size: 0.94rem;
+    text-align: center;
+  }
+
+  .hero-actions {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+
+  .hero-actions a:first-child {
+    width: auto;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 0;
+    width: 100%;
+  }
+
+  .hero-stats > div {
+    margin-right: 0 !important;
+    padding-right: 14px !important;
+  }
+
+  .hero-stats > div:nth-child(2) {
+    border-right: none !important;
+    padding-left: 14px !important;
+  }
+
+  .hero-stats > div:nth-child(4) {
+    border-right: none !important;
+    padding-left: 14px !important;
+  }
+
+  .hero-trust {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-researchers {
+    padding-left: 2px;
+  }
+
+  .hero-researcher {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-trust > div:last-child {
+    min-width: 0;
+    text-align: center;
+  }
+
+  .hero-trust > div:last-child > div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+
+/* Very Small Screens */
+@media (max-width: 360px) {
+  .hero-main {
+    padding: 105px 5% 38px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .hero-heading {
+    font-size: 1.9rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .hero-researcher {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-researcher + .hero-researcher {
+    margin-left: -7px;
+  }
+}
+  `}</style>
+
+  <div className="hero-main">
+    {/* Background Grid */}
+    <div
+      aria-hidden
+      style={{
+        position: "absolute",
+        inset: 0,
+        opacity: 0.5,
+        pointerEvents: "none",
+        backgroundImage:
+          "repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(22,33,58,0.14) 40px)",
+        WebkitMaskImage:
+          "linear-gradient(180deg, transparent, rgba(0,0,0,.35) 40%, transparent 85%)",
+        maskImage:
+          "linear-gradient(180deg, transparent, rgba(0,0,0,.35) 40%, transparent 85%)",
+      }}
+    />
+
+    {/* LEFT COLUMN */}
+    <div className="hero-content">
+
+      {/* Heading */}
+     <h1 className="hero-heading">
+  <span
+    style={{
+      display: "block",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+    }}
+  >
+    <span
+      className="rise-line"
+      style={{
+        animationDelay: ".28s",
+        display: "inline-block",
+      }}
+    >
+      Where research
+    </span>
+  </span>
 
   <span
     style={{
-      position: "absolute",
-      left: 0,
-      right: 0,
-      bottom: -3,
-      height: 1,
-      background: "#012D68",
-      transition: "background .25s ease",
-    }}
-  />
-</Link>
-            </div>
-
-            <div
-              className="rise"
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                borderTop: "1px solid rgba(1,45,104,0.14)",
-                paddingTop: 22,
-                animationDelay: ".8s",
-              }}
-            >
-              {[
-                ["15,000+", "Papers published"],
-                ["12,000+", "Authors served"],
-                ["8+", "Years in print"],
-                ["3", "Editorial offices"],
-              ].map(([num, label], i, arr) => (
-                <div
-                  key={label}
-                  style={{
-                    marginRight: 28,
-                    paddingRight: 28,
-                    borderRight:
-                      i < arr.length - 1 ?
-                        "1px solid rgba(1,45,104,0.14)"
-                      : "none",
-
-                    cursor: "default",
-                    transition: "all .3s ease",
-                    transform: "translateY(0)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-5px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                  }}
-                >
-                  {/* Number */}
-                  <span
-                    style={{
-                      display: "block",
-                      fontFamily: "Fraunces, serif",
-                      fontWeight: 500,
-                      fontSize: "1.5rem",
-                      fontVariantNumeric: "tabular-nums",
-                      color: "#012D68",
-                      transition: "all .3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "#D69B23";
-                      e.currentTarget.style.textShadow =
-                        "0 4px 12px rgba(214,155,35,0.25)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "#012D68";
-                      e.currentTarget.style.textShadow = "none";
-                    }}
-                  >
-                    {num}
-                  </span>
-
-                  {/* Label */}
-                  <span
-                    style={{
-                      fontSize: "0.74rem",
-                      color: "#64748B",
-                      marginTop: 2,
-                      display: "block",
-                      transition: "color .3s ease",
-                    }}
-                  >
-                    {label}
-                  </span>
-                </div>
-              ))}
-            </div>
-            {/* Trust / Publication Strip */}
-<div
-  className="rise"
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: 16,
-    marginTop: 28,
-    paddingTop: 20,
-    borderTop: "1px solid rgba(1,45,104,0.10)",
-    animationDelay: ".95s",
-  }}
->
-  {/* Author / Researcher Images */}
-  <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      paddingLeft: 6,
+      display: "block",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
     }}
   >
-    {[
-      "/images/authors/author1.jpg",
-      "/images/authors/author2.jpg",
-      "/images/authors/author3.jpg",
-      "/images/authors/author4.jpg",
-      "/images/authors/author1.jpg",
-      "/images/authors/author2.jpg",
-    ].map((image, index) => (
-      <div
-        key={index}
+    <span
+      className="rise-line"
+      style={{
+        animationDelay: ".4s",
+        display: "inline-block",
+      }}
+    >
+      becomes{" "}
+      <em
         style={{
-          width: 50,
-          height: 50,
-          borderRadius: "50%",
-          overflow: "hidden",
-          border: "2px solid #FFFFFF",
-          marginLeft: index === 0 ? 0 : -9,
-          boxShadow: "0 3px 10px rgba(1,45,104,0.14)",
+          fontStyle: "italic",
+          fontWeight: 400,
+          color: "#D69B23",
           position: "relative",
-          zIndex: 6 - index,
-          transition: "all .3s ease",
-          cursor: "pointer",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform =
-            "translateY(-4px) scale(1.08)";
-          e.currentTarget.style.zIndex = "20";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform =
-            "translateY(0) scale(1)";
-          e.currentTarget.style.zIndex = `${6 - index}`;
+          display: "inline-block",
+          textShadow: "0 3px 10px rgba(214,155,35,0.12)",
         }}
       >
-        <Image
-          src={image}
-          alt="Researcher"
-          fill
-          sizes="42px"
+        reference.
+        <span
           style={{
-            objectFit: "cover",
+            position: "absolute",
+            left: "5%",
+            right: "5%",
+            bottom: -4,
+            height: 2,
+            borderRadius: 10,
+            background: "#D69B23",
+            opacity: 0.65,
           }}
         />
-      </div>
-    ))}
-  </div>
-
-  {/* Small Gold Divider */}
-  <div
-    style={{
-      width: 5,
-      height: 5,
-      minWidth: 5,
-      borderRadius: "50%",
-      background: "#D69B23",
-    }}
-  />
-
-  {/* Text */}
-  <div>
-    <div
-      style={{
-        display: "flex",
-        alignItems: "baseline",
-        gap: 6,
-        lineHeight: 1,
-      }}
-    >
-      <span
-        style={{
-          fontFamily: "Fraunces, serif",
-          fontSize: "1.35rem",
-          fontWeight: 600,
-          color: "#D69B23",
-        }}
-      >
-        15,000+
-      </span>
-
-      <span
-        style={{
-          fontSize: "0.82rem",
-          fontWeight: 600,
-          color: "#012D68",
-        }}
-      >
-        research papers
-      </span>
-    </div>
-
-    <span
-      style={{
-        display: "block",
-        marginTop: 4,
-        fontSize: "0.72rem",
-        color: "#64748B",
-      }}
-    >
-      Published and trusted worldwide
+      </em>
     </span>
-  </div>
-</div>
-            
+  </span>
+</h1>
+
+      {/* Description */}
+      <p
+        className="rise hero-description"
+        style={{
+          animationDelay: ".56s",
+        }}
+      >
+        Editorial support,{" "}
+        <span
+          style={{
+            color: "#012D68",
+            fontWeight: 500,
+          }}
+        >
+          rigorous indexing
+        </span>
+        , and global distribution for scholars who publish once and get
+        cited for years.
+      </p>
+
+      {/* ACTIONS */}
+      <div
+        className="rise hero-actions"
+        style={{
+          animationDelay: ".68s",
+        }}
+      >
+        {/* Primary Button */}
+        <Link
+          href="/journals"
+          style={{
+            display: "inline-block",
+            cursor: "pointer",
+            borderRadius: 2,
+            border: "1px solid #012D68",
+            background: "#012D68",
+            color: "#FFFFFF",
+            padding: "13px 24px",
+            fontSize: "0.95rem",
+            fontWeight: 600,
+            fontFamily: "Inter, sans-serif",
+            textDecoration: "none",
+            transition: "all .25s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#D69B23";
+            e.currentTarget.style.borderColor = "#D69B23";
+            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.boxShadow =
+              "0 6px 18px rgba(1, 45, 104, 0.18)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "#012D68";
+            e.currentTarget.style.borderColor = "#012D68";
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          Explore Journals
+        </Link>
+
+        {/* Secondary Link */}
+        <Link
+          href="/associated-journals"
+          style={{
+            position: "relative",
+            display: "inline-block",
+            cursor: "pointer",
+            background: "none",
+            border: "none",
+            color: "#012D68",
+            fontWeight: 600,
+            fontSize: "0.95rem",
+            fontFamily: "Inter, sans-serif",
+            padding: 0,
+            textDecoration: "none",
+            transition: "color .25s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "#D69B23";
+            e.currentTarget.querySelector("span").style.background = "#D69B23";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "#012D68";
+            e.currentTarget.querySelector("span").style.background = "#012D68";
+          }}
+        >
+          See indexing partners
+
+          <span
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: -3,
+              height: 1,
+              background: "#012D68",
+              transition: "background .25s ease",
+            }}
+          />
+        </Link>
+      </div>
+
+      {/* STATS */}
+      <div
+        className="rise hero-stats"
+        style={{
+          animationDelay: ".8s",
+        }}
+      >
+        {[
+          ["15,000+", "Papers published"],
+          ["12,000+", "Authors served"],
+          ["8+", "Years in print"],
+          ["3", "Editorial offices"],
+        ].map(([num, label], i, arr) => (
+          <div
+            key={label}
+            style={{
+              marginRight: 28,
+              paddingRight: 28,
+              borderRight:
+                i < arr.length - 1
+                  ? "1px solid rgba(1,45,104,0.14)"
+                  : "none",
+              cursor: "default",
+              transition: "all .3s ease",
+              transform: "translateY(0)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-5px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            {/* Number */}
+            <span
+              style={{
+                display: "block",
+                fontFamily: "Fraunces, serif",
+                fontWeight: 500,
+                fontSize: "1.5rem",
+                fontVariantNumeric: "tabular-nums",
+                color: "#012D68",
+                transition: "all .3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#D69B23";
+                e.currentTarget.style.textShadow =
+                  "0 4px 12px rgba(214,155,35,0.25)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "#012D68";
+                e.currentTarget.style.textShadow = "none";
+              }}
+            >
+              {num}
+            </span>
+
+            {/* Label */}
+            <span
+              style={{
+                fontSize: "0.74rem",
+                color: "#64748B",
+                marginTop: 2,
+                display: "block",
+                transition: "color .3s ease",
+              }}
+            >
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* TRUST / PUBLICATION STRIP */}
+      <div
+        className="rise hero-trust"
+        style={{
+          animationDelay: ".95s",
+        }}
+      >
+        {/* Author / Researcher Images */}
+        <div className="hero-researchers">
+          {[
+            "/images/authors/author1.jpg",
+            "/images/authors/author2.jpg",
+            "/images/authors/author3.jpg",
+            "/images/authors/author4.jpg",
+            "/images/authors/author1.jpg",
+            "/images/authors/author2.jpg",
+          ].map((image, index) => (
+            <div
+              key={index}
+              className="hero-researcher"
+              style={{
+                zIndex: 6 - index,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform =
+                  "translateY(-4px) scale(1.08)";
+                e.currentTarget.style.zIndex = "20";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform =
+                  "translateY(0) scale(1)";
+                e.currentTarget.style.zIndex = `${6 - index}`;
+              }}
+            >
+              <Image
+                src={image}
+                alt="Researcher"
+                fill
+                sizes="42px"
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Small Gold Divider */}
+        <div
+          style={{
+            width: 5,
+            height: 5,
+            minWidth: 5,
+            borderRadius: "50%",
+            background: "#D69B23",
+          }}
+        />
+
+        {/* Text */}
+        <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: 6,
+              lineHeight: 1,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "Fraunces, serif",
+                fontSize: "1.35rem",
+                fontWeight: 600,
+                color: "#D69B23",
+              }}
+            >
+              15,000+
+            </span>
+
+            <span
+              style={{
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                color: "#012D68",
+              }}
+            >
+              research papers
+            </span>
           </div>
 
-          {/* right column: image-only */}
-        <Image
-  src="/images/blogs/bg-image.png"
-  alt="IARA Journal"
-  width={500}
-  height={600}
-  style={{
-    width: "100%",
-    height: "auto",
-    maxWidth: "500px",
-    display: "block",
-  }}
-/>
+          <span
+            style={{
+              display: "block",
+              marginTop: 4,
+              fontSize: "0.72rem",
+              color: "#64748B",
+            }}
+          >
+            Published and trusted worldwide
+          </span>
         </div>
-      
+      </div>
+    </div>
 
-      </section>
+    {/* RIGHT COLUMN */}
+    <div className="hero-image-wrap">
+      <Image
+        className="hero-image"
+        src="/images/blogs/bg-image.png"
+        alt="IARA Journal"
+        width={500}
+        height={600}
+      />
+    </div>
+  </div>
+</section>
     </>
   );
 }
