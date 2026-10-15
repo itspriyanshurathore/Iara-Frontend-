@@ -711,6 +711,67 @@ export function JournalDetail({ journal }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+
+  const currentYear = new Date().getFullYear();
+  const tierDetails =
+  journal.indexing_tier_details ??
+  journal.journal_indexing_tier_details ??
+  journal.tiers ??
+  [];
+
+const journalRankings = (() => {
+  const rankings = new Set();
+
+  const collectRankings = (value, parentKey = "") => {
+    if (Array.isArray(value)) {
+      value.forEach((item) => collectRankings(item, parentKey));
+      return;
+    }
+
+    if (!value || typeof value !== "object") return;
+
+    Object.entries(value).forEach(([key, item]) => {
+      const normalizedKey = key.toLowerCase();
+
+      if (
+        normalizedKey === "tier" ||
+        normalizedKey === "tiers" ||
+        normalizedKey.includes("tier_name")
+      ) {
+        const addTier = (tier) => {
+          if (typeof tier === "string" && tier.trim()) {
+            rankings.add(tier.trim());
+          } else if (tier && typeof tier === "object") {
+            const name =
+              tier.name ??
+              tier.title ??
+              tier.label ??
+              tier.tier_name;
+
+            if (typeof name === "string" && name.trim()) {
+              rankings.add(name.trim());
+            }
+          }
+        };
+
+        if (Array.isArray(item)) {
+          item.forEach(addTier);
+        } else {
+          addTier(item);
+        }
+      }
+
+      if (item && typeof item === "object") {
+        collectRankings(item, key);
+      }
+    });
+  };
+
+  collectRankings(journal);
+
+  return [...rankings];
+})();
+
   return (
     <article
       className="
@@ -809,10 +870,10 @@ export function JournalDetail({ journal }) {
               </span>
 
               {/* PUBLISHING SINCE */}
-              <span className="flex items-center gap-2 text-sm text-slate-500">
+              {/* <span className="flex items-center gap-2 text-sm text-slate-500">
                 <CalendarDays className="size-4 text-[#D69B23]" />
                 Since {journal.publishing_since}
-              </span>
+              </span> */}
             </div>
 
             {/* INDEXING LOGOS */}
@@ -938,156 +999,174 @@ export function JournalDetail({ journal }) {
         border border-[#012D68]/10
       "
           >
-            <dl>
-              {/* ISSN */}
-              <div
-                className="
-            grid grid-cols-[140px_1fr]
-            gap-3 px-4 py-2.5
-            text-sm
-            bg-[#012D68]/[0.025]
-            max-[650px]:grid-cols-1
-            max-[650px]:gap-1
-          "
-              >
-                <dt className="font-semibold text-[#012D68]">ISSN / E-ISSN</dt>
-
-                <dd className="leading-5 text-slate-600">{journal.issn}</dd>
-              </div>
-
-              {/* Publisher */}
-              <div
-                className="
-            grid grid-cols-[140px_1fr]
-            gap-3 px-4 py-2.5
-            text-sm
-            bg-white
-            max-[650px]:grid-cols-1
-            max-[650px]:gap-1
-          "
-              >
-                <dt className="font-semibold text-[#012D68]">Publisher</dt>
-
-                <dd className="leading-5 text-slate-600">
-                  {journal.publisher}
-                </dd>
-              </div>
-
-              {/* Active */}
-              <div
-                className="
+           
+{/* ISSN */}
+<div
+  className="
     grid grid-cols-[140px_1fr]
-    gap-3 px-4 py-2.5
-    text-sm
+    gap-3 px-4 py-2.5 text-sm
     bg-[#012D68]/[0.025]
     max-[650px]:grid-cols-1
     max-[650px]:gap-1
   "
-              >
-                <dt className="font-semibold text-[#012D68]">Status</dt>
+>
+  <dt className="font-semibold text-[#012D68]">ISSN</dt>
+  <dd className="leading-5 text-slate-600">
+    {journal.issn}
+  </dd>
+</div>
 
-                <dd>
-                  {journal.active ?
-                    <span className="inline-flex items-center gap-2 rounded-full bg-[#31B461]/10 px-3 py-1 text-xs font-semibold text-[#168A45]">
-                      <span className="flex size-4 items-center justify-center rounded-full bg-[#31B461] text-[10px] text-white">
-                        ✓
-                      </span>
-                      Currently Active
-                    </span>
-                  : <span className="inline-flex items-center gap-2 rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
-                      <span className="flex size-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
-                        ×
-                      </span>
-                      Discontinued
-                    </span>
-                  }
-                </dd>
-              </div>
 
-              {/* Language */}
-              <div
-                className="
-            grid grid-cols-[140px_1fr]
-            gap-3 px-4 py-2.5
-            text-sm
-            bg-white
-            max-[650px]:grid-cols-1
-            max-[650px]:gap-1
+{/* JOURNAL RANKING */}
+<div
+  className="
+    grid grid-cols-[140px_1fr]
+    gap-3 px-4 py-2.5 text-sm
+    bg-white
+    max-[650px]:grid-cols-1
+    max-[650px]:gap-1
+  "
+>
+  <dt className="font-semibold text-[#012D68]">
+    Journal Ranking
+  </dt>
+
+  <dd className="leading-5 text-slate-600">
+    {journalRankings.length > 0
+      ? [...new Set(journalRankings)].join(", ")
+      : "Not available"}
+  </dd>
+</div>
+
+
+
+{/* ACTIVE YEAR */}
+<div
+  className="
+    grid grid-cols-[140px_1fr]
+    gap-3 px-4 py-2.5 text-sm
+    bg-[#012D68]/[0.025]
+    max-[650px]:grid-cols-1
+    max-[650px]:gap-1
+  "
+>
+  <dt className="font-semibold text-[#012D68]">
+    Active Year
+  </dt>
+
+  <dd className="flex flex-wrap items-center gap-2">
+    <span className="leading-5 text-slate-600">
+      {journal.publishing_since
+        ? `${journal.publishing_since}`
+        : "Not available"}
+    </span>
+
+    {journal.active ? (
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#31B461]/10 px-3 py-1 text-xs font-semibold text-[#168A45]">
+        <span className="flex size-4 items-center justify-center rounded-full bg-[#31B461] text-[10px] text-white">
+          ✓
+        </span>
+        Active
+      </span>
+    ) : (
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
+        <span className="flex size-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
+          ×
+        </span>
+        Discontinued
+      </span>
+    )}
+  </dd>
+</div>
+
+
+
+{/* SOURCE DETAILS */}
+{typeof journal.indexing_link === "string" &&
+  journal.indexing_link.trim() !== "" && (
+    <div
+      className="
+        grid grid-cols-[140px_1fr]
+        gap-3 px-4 py-2.5 text-sm
+        bg-white
+        max-[650px]:grid-cols-1
+        max-[650px]:gap-1
+      "
+    >
+      <dt className="font-semibold text-[#012D68]">
+        Source Details
+      </dt>
+
+      <dd>
+        <a
+          href={journal.indexing_link.trim()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="
+            inline-flex items-center gap-1.5
+            font-medium text-[#D69B23]
+            transition-colors hover:text-[#012D68]
+            hover:underline
           "
-              >
-                <dt className="font-semibold text-[#012D68]">Language</dt>
+        >
+          View Source Page
+          <ExternalLink className="size-3.5" />
+        </a>
+      </dd>
+    </div>
+  )}
 
-                <dd className="leading-5 text-slate-600">{journal.language}</dd>
-              </div>
 
-              {/* Indexing Link */}
-              {journal.indexing_link && (
-                <div
-                  className="
-      grid grid-cols-[140px_1fr]
-      gap-3 px-4 py-2.5
-      text-sm
-      bg-[#012D68]/[0.025]
-      max-[650px]:grid-cols-1
-      max-[650px]:gap-1
-    "
-                >
-                  <dt className="font-semibold text-[#012D68]">
-                    Indexing Link
-                  </dt>
+{/* PUBLISHER */}
+<div
+  className="
+    grid grid-cols-[140px_1fr]
+    gap-3 px-4 py-2.5 text-sm
+    bg-[#012D68]/[0.025]
+    max-[650px]:grid-cols-1
+    max-[650px]:gap-1
+  "
+>
+  <dt className="font-semibold text-[#012D68]">
+    Publisher
+  </dt>
+  <dd className="leading-5 text-slate-600">
+    {journal.publisher}
+  </dd>
+</div>
 
-                  <dd>
-                    <a
-                      href={journal.indexing_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="
-          inline-flex items-center
-          gap-1.5
-          font-medium
-          text-[#D69B23]
-          transition-colors
-          hover:text-[#012D68]
-          hover:underline
-        "
-                    >
-                      View Indexing Link
-                      <ExternalLink className="size-3.5" />
-                    </a>
-                  </dd>
-                </div>
-              )}
+{/* AIM & SCOPE */}
+<div
+  className="
+    grid grid-cols-[140px_1fr]
+    gap-3 px-4 py-3 text-sm
+    bg-white
+    max-[650px]:grid-cols-1
+    max-[650px]:gap-1.5
+  "
+>
+  <dt className="font-semibold text-[#012D68]">
+    Aim &amp; Scope
+  </dt>
+  <dd className="leading-6 text-slate-600">
+    <div className="space-y-2">
+      <p className="text-justify">
+        <b className="font-semibold text-slate-700">
+          Aim:
+        </b>{" "}
+        {journal.aim}
+      </p>
 
-              {/* Aim & Scope */}
-              <div
-                className="
-            grid grid-cols-[140px_1fr]
-            gap-3 px-4 py-3
-            text-sm
-            bg-white
-            max-[650px]:grid-cols-1
-            max-[650px]:gap-1.5
-          "
-              >
-                <dt className="font-semibold text-[#012D68]">Aim & Scope</dt>
+      <p className="text-justify">
+        <b className="font-semibold text-slate-700">
+          Scope:
+        </b>{" "}
+        {journal.scope}
+      </p>
+    </div>
+  </dd>
+</div>
 
-                <dd className="leading-6 text-slate-600">
-                  <div className="space-y-2">
-                    {/* Aim */}
-                    <p className="text-justify">
-                      <b className="font-semibold text-slate-700">Aim:</b>{" "}
-                      {journal.aim}
-                    </p>
-
-                    {/* Scope */}
-                    <p className="text-justify">
-                      <b className="font-semibold text-slate-700">Scope:</b>{" "}
-                      {journal.scope}
-                    </p>
-                  </div>
-                </dd>
-              </div>
-            </dl>
           </div>
         </section>
       </div>

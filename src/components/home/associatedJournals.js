@@ -39,350 +39,426 @@ export function JournalFilterSidebar({
   setSubjectFilter,
   indexFilter = "all",
   setIndexFilter,
+  tierFilter = "all",
+  setTierFilter,
   clearFilters,
   navigationMode = false,
 }) {
-  // const indexingOptions = [
-  //   "Scopus",
-  //   "Web of Science",
-  //   "Embase",
-  //   "ABDC",
-  //   "Other",
-  // ];
-
-  const [indexingOptions, setIndexingOptions] = useState([]);
+  const [indexingOptions, setIndexingOptions] = useState({
+    indexings: [],
+    tiers: [],
+  });
   const [journalCategories, setJournalCategories] = useState([]);
-
-  const fetchJournalCategories = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/categories`,
-      );
-      if (response) {
-        setJournalCategories(response.data);
-      } else toast(response.message);
-    } catch (err) {
-      console.log(err);
-      toast("Failed to load categories");
-    }
-  };
-
-  const fetchIndexingOptions = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/indexing`,
-      );
-      if (response) {
-        setIndexingOptions(response.data);
-      } else toast(response.message);
-    } catch (err) {
-      console.log(err);
-      toast("Failed to load indexing");
-    }
-  };
+  const [domainOpen, setDomainOpen] = useState(true);
+  const [indexingOpen, setIndexingOpen] = useState(true);
+  const [tierOpen, setTierOpen] = useState(true);
 
   useEffect(() => {
+    const fetchJournalCategories = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/categories`
+        );
+        setJournalCategories(
+          Array.isArray(response.data) ? response.data : []
+        );
+      } catch (error) {
+        console.error("Failed to load journal categories:", error);
+        toast("Failed to load categories");
+      }
+    };
+
+    const fetchIndexingOptions = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/associated-journals/indexing`
+        );
+
+        setIndexingOptions({
+          indexings: Array.isArray(response.data?.indexings)
+            ? response.data.indexings
+            : [],
+          tiers: Array.isArray(response.data?.tiers)
+            ? response.data.tiers
+            : [],
+        });
+      } catch (error) {
+        console.error("Failed to load indexing options:", error);
+        toast("Failed to load indexing");
+      }
+    };
+
     fetchJournalCategories();
     fetchIndexingOptions();
   }, []);
 
+  const sectionHeadingClass =
+    "flex w-full items-center justify-between px-1 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-[#D69B23]";
+
+  const optionClass =
+    "flex w-full min-w-0 items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-left text-[13px] transition-colors";
+
+  const compactOptionClass =
+    "inline-flex max-w-full items-center gap-1.5 rounded-md border px-2 py-1 text-xs transition-colors";
+
   return (
-  <aside className="w-full min-w-0 lg:w-full">
-  <div
-    className="
-      sticky top-24
-      w-full min-w-0
-      overflow-hidden
-      rounded-[20px]
-      border border-[#012D68]/10
-      bg-white
-      shadow-[0_16px_40px_rgba(1,45,104,0.06)]
-      lg:sticky lg:top-24
-    "
-  >
-    {/* HEADER */}
-    <div
-      className="
-        flex items-center gap-3
-        border-b border-[#012D68]/10
-        px-5 py-4
-        sm:px-5
-        max-[480px]:px-4
-      "
-    >
+    <aside className="w-full min-w-0 lg:w-full">
       <div
         className="
-          flex h-10 w-10 shrink-0
-          items-center justify-center
-          rounded-xl
-          bg-[#012D68]
+          w-full min-w-0
+          max-h-[calc(100vh-1.5rem)]
+          overflow-y-auto overscroll-contain
+          [scrollbar-width:thin]
+          [scrollbar-color:#CBD5E1_transparent]
+          rounded-xl border border-[#012D68]/10
+          bg-white shadow-[0_8px_24px_rgba(1,45,104,0.05)]
         "
       >
-        <SlidersHorizontal className="size-4 text-[#F7C23F]" />
-      </div>
+        {/* HEADER */}
+        <div className="flex items-center gap-3 border-b border-[#012D68]/10 px-3.5 py-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#012D68]">
+            <SlidersHorizontal className="size-4 text-[#F7C23F]" />
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-sm font-bold text-[#012D68]">
+              Filter Journals
+            </h3>
+            <p className="mt-0.5 text-[11px] text-slate-400">
+              Refine your journal search
+            </p>
+          </div>
+        </div>
 
-      <div className="min-w-0">
-        <h3 className="text-sm font-bold text-[#012D68]">
-          Filter Journals
-        </h3>
-
-        <p className="mt-0.5 text-[11px] text-slate-400">
-          Refine your journal search
-        </p>
-      </div>
-    </div>
-
-    {/* DOMAIN */}
-    <div className="border-b border-[#012D68]/10 p-4 max-[480px]:p-3.5">
-      <p
-        className="
-          mb-3 px-2
-          text-[10px] font-bold
-          uppercase tracking-[0.18em]
-          text-[#D69B23]
-        "
-      >
-        Domain Based
-      </p>
-
-      {navigationMode ? (
-        <Link
-          href="/associated-journals"
-          className={`
-            mb-1 flex w-full min-w-0
-            items-center justify-between gap-2
-            rounded-xl px-3 py-2.5
-            text-left text-sm
-            transition-all
-            ${
-              subjectFilter === "all"
-                ? "bg-[#012D68] text-white"
-                : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
-            }
-          `}
-        >
-          <span className="min-w-0 break-words">All Journals</span>
-          <ChevronRight className="size-4 shrink-0" />
-        </Link>
-      ) : (
-        <button
-          type="button"
-          onClick={() => setSubjectFilter("all")}
-          className={`
-            mb-1 flex w-full min-w-0
-            items-center justify-between gap-2
-            rounded-xl px-3 py-2.5
-            text-left text-sm
-            transition-all
-            ${
-              subjectFilter === "all"
-                ? "bg-[#012D68] text-white"
-                : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
-            }
-          `}
-        >
-          <span className="min-w-0 break-words">All Journals</span>
-          <ChevronRight className="size-4 shrink-0" />
-        </button>
-      )}
-
-      {journalCategories.map((subject) =>
-        navigationMode ? (
-          <Link
-            key={subject.slug}
-            href={`/associated-journals?category=${subject.slug}`}
-            className={`
-              capitalize
-              mb-1 flex w-full min-w-0
-              items-center justify-between gap-2
-              rounded-xl px-3 py-2.5
-              text-left text-[13px]
-              transition-all
-              ${
-                subjectFilter === subject.slug
-                  ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
-                  : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
-              }
-            `}
+        {/* DOMAIN */}
+        <section className="border-b border-[#012D68]/10 p-3 max-[480px]:p-2.5">
+          <button
+            type="button"
+            onClick={() => setDomainOpen((open) => !open)}
+            aria-expanded={domainOpen}
+            className={sectionHeadingClass}
           >
-            <span className="min-w-0 break-words">
-              {subject.title}
-            </span>
-
+            <span>Domain Based</span>
             <ChevronRight
-              className={`
-                size-3.5 shrink-0
-                ${
-                  subjectFilter === subject.slug
-                    ? "text-[#D69B23]"
-                    : "text-slate-300"
-                }
-              `}
+              className={`size-4 transition-transform ${
+                domainOpen ? "rotate-90" : ""
+              }`}
             />
+          </button>
+
+          {domainOpen && (
+            <div className="space-y-0.5 pb-1">
+              {navigationMode ? (
+                <Link
+                  href="/associated-journals"
+                  className={`${optionClass} ${
+                    subjectFilter === "all"
+                      ? "bg-[#012D68] font-semibold text-white"
+                      : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
+                  }`}
+                >
+                  <span className="min-w-0 break-words">All Journals</span>
+                  <ChevronRight className="size-4 shrink-0" />
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setSubjectFilter("all")}
+                  className={`${optionClass} ${
+                    subjectFilter === "all"
+                      ? "bg-[#012D68] font-semibold text-white"
+                      : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
+                  }`}
+                >
+                  <span className="min-w-0 break-words">All Journals</span>
+                  <ChevronRight className="size-4 shrink-0" />
+                </button>
+              )}
+
+              {journalCategories.map((subject) =>
+                navigationMode ? (
+                  <Link
+                    key={subject.slug}
+                    href={`/associated-journals?category=${encodeURIComponent(
+                      subject.slug
+                    )}`}
+                    className={`capitalize ${optionClass} ${
+                      subjectFilter === subject.slug
+                        ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
+                        : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
+                    }`}
+                  >
+                    <span className="min-w-0 break-words">
+                      {subject.title}
+                    </span>
+                    <ChevronRight
+                      className={`size-3.5 shrink-0 ${
+                        subjectFilter === subject.slug
+                          ? "text-[#D69B23]"
+                          : "text-slate-300"
+                      }`}
+                    />
+                  </Link>
+                ) : (
+                  <button
+                    key={subject.slug}
+                    type="button"
+                    onClick={() => setSubjectFilter(subject.slug)}
+                    className={`capitalize ${optionClass} ${
+                      subjectFilter === subject.slug
+                        ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
+                        : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
+                    }`}
+                  >
+                    <span className="min-w-0 break-words">
+                      {subject.title}
+                    </span>
+                    <ChevronRight
+                      className={`size-3.5 shrink-0 ${
+                        subjectFilter === subject.slug
+                          ? "text-[#D69B23]"
+                          : "text-slate-300"
+                      }`}
+                    />
+                  </button>
+                )
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* INDEXING */}
+        <section className="border-b border-[#012D68]/10 p-3 max-[480px]:p-2.5">
+          <button
+            type="button"
+            onClick={() => setIndexingOpen((open) => !open)}
+            aria-expanded={indexingOpen}
+            className={sectionHeadingClass}
+          >
+            <span>Indexing Based</span>
+            <ChevronRight
+              className={`size-4 transition-transform ${
+                indexingOpen ? "rotate-90" : ""
+              }`}
+            />
+          </button>
+
+          {indexingOpen && (
+            <div className="pb-1">
+              {navigationMode ? (
+                <Link
+                  href="/associated-journals"
+                  className={`${optionClass} mb-2 ${
+                    indexFilter === "all"
+                      ? "bg-[#012D68] font-semibold text-white"
+                      : "text-slate-500 hover:bg-[#012D68]/[0.05]"
+                  }`}
+                >
+                  <span>All Indexing</span>
+                  <Database className="size-4 shrink-0" />
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setIndexFilter("all")}
+                  className={`${optionClass} mb-2 ${
+                    indexFilter === "all"
+                      ? "bg-[#012D68] font-semibold text-white"
+                      : "text-slate-500 hover:bg-[#012D68]/[0.05]"
+                  }`}
+                >
+                  <span>All Indexing</span>
+                  <Database className="size-4 shrink-0" />
+                </button>
+              )}
+
+              <div className="flex flex-wrap gap-1.5">
+                {(indexingOptions.indexings ?? []).map((indexing) =>
+                  navigationMode ? (
+                    <Link
+                      key={indexing}
+                      href={`/associated-journals?indexing=${encodeURIComponent(
+                        indexing
+                      )}`}
+                      className={`${compactOptionClass} ${
+                        indexFilter === indexing
+                          ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
+                          : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
+                      }`}
+                    >
+                      {indexing}
+                    </Link>
+                  ) : (
+                    <button
+                      key={indexing}
+                      type="button"
+                      onClick={() => setIndexFilter(indexing)}
+                      className={`${compactOptionClass} ${
+                        indexFilter === indexing
+                          ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
+                          : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
+                      }`}
+                    >
+                      {indexing}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* TIER BASED */}
+        <section className="border-b border-[#012D68]/10 p-3 max-[480px]:p-2.5">
+          <button
+            type="button"
+            onClick={() => setTierOpen((open) => !open)}
+            aria-expanded={tierOpen}
+            className={sectionHeadingClass}
+          >
+            <span>Tier Based</span>
+            <ChevronRight
+              className={`size-4 transition-transform ${
+                tierOpen ? "rotate-90" : ""
+              }`}
+            />
+          </button>
+
+          {tierOpen && (
+            <div className="pb-1">
+              {navigationMode ? (
+                <Link
+                  href="/associated-journals"
+                  className={`${optionClass} mb-2 ${
+                    tierFilter === "all"
+                      ? "bg-[#012D68] font-semibold text-white"
+                      : "text-slate-500 hover:bg-[#012D68]/[0.05]"
+                  }`}
+                >
+                  <span>All Tiers</span>
+                  <ChevronRight className="size-4 shrink-0" />
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setTierFilter?.("all")}
+                  className={`${optionClass} mb-2 ${
+                    tierFilter === "all"
+                      ? "bg-[#012D68] font-semibold text-white"
+                      : "text-slate-500 hover:bg-[#012D68]/[0.05]"
+                  }`}
+                >
+                  <span>All Tiers</span>
+                  <ChevronRight className="size-4 shrink-0" />
+                </button>
+              )}
+
+            <div className="space-y-3 pb-1">
+  {/* ABDC TIERS */}
+  <div>
+  <p className="mb-2 flex items-center gap-2 px-0.5 text-xs font-semibold uppercase tracking-wider text-[#012D68]">
+  <span className="h-4 w-1 rounded-full bg-[#D69B23]" />
+  ABDC
+</p>
+
+    <div className="grid grid-cols-4 gap-1.5">
+      {["ABDC A", "ABDC B", "ABDC C", "ABDC D"].map((tierName) => {
+        const selected = tierFilter === tierName;
+
+        const tierClass = `
+          flex min-w-0 items-center justify-center
+          rounded-md border px-1.5 py-2
+          text-xs transition-colors
+          ${
+            selected
+              ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
+              : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
+          }
+        `;
+
+        return navigationMode ? (
+          <Link
+            key={tierName}
+            href={`/associated-journals?tier=${encodeURIComponent(tierName)}`}
+            className={tierClass}
+          >
+            {tierName}
           </Link>
         ) : (
           <button
-            key={subject.slug}
+            key={tierName}
             type="button"
-            onClick={() => setSubjectFilter(subject.slug)}
-            className={`
-              capitalize
-              mb-1 flex w-full min-w-0
-              items-center justify-between gap-2
-              rounded-xl px-3 py-2.5
-              text-left text-[13px]
-              transition-all
-              ${
-                subjectFilter === subject.slug
-                  ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
-                  : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
-              }
-            `}
+            onClick={() => setTierFilter?.(tierName)}
+            className={tierClass}
           >
-            <span className="min-w-0 break-words">
-              {subject.title}
-            </span>
-
-            <ChevronRight
-              className={`
-                size-3.5 shrink-0
-                ${
-                  subjectFilter === subject.slug
-                    ? "text-[#D69B23]"
-                    : "text-slate-300"
-                }
-              `}
-            />
+            {tierName}
           </button>
-        )
-      )}
+        );
+      })}
     </div>
-
-    {/* INDEXING */}
-    <div className="p-4 max-[480px]:p-3.5">
-      <p
-        className="
-          mb-3 px-2
-          text-[10px] font-bold
-          uppercase tracking-[0.18em]
-          text-[#D69B23]
-        "
-      >
-        Indexing Based
-      </p>
-
-      {navigationMode ? (
-        <Link
-          href="/associated-journals"
-          className={`
-            mb-1 flex w-full min-w-0
-            items-center justify-between gap-2
-            rounded-xl px-3 py-2.5
-            text-sm
-            ${
-              indexFilter === "all"
-                ? "bg-[#012D68] text-white"
-                : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-            }
-          `}
-        >
-          <span className="min-w-0 break-words">All Indexing</span>
-          <Database className="size-4 shrink-0" />
-        </Link>
-      ) : (
-        <button
-          type="button"
-          onClick={() => setIndexFilter("all")}
-          className={`
-            mb-1 flex w-full min-w-0
-            items-center justify-between gap-2
-            rounded-xl px-3 py-2.5
-            text-sm
-            ${
-              indexFilter === "all"
-                ? "bg-[#012D68] text-white"
-                : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-            }
-          `}
-        >
-          <span className="min-w-0 break-words">All Indexing</span>
-          <Database className="size-4 shrink-0" />
-        </button>
-      )}
-
-      {indexingOptions.map((indexing) =>
-        navigationMode ? (
-          <Link
-            key={indexing}
-            href={`/associated-journals?indexing=${encodeURIComponent(indexing)}`}
-            className={`
-              mb-1 flex w-full min-w-0
-              items-center justify-between gap-2
-              rounded-xl px-3 py-2.5
-              text-sm transition-all
-              ${
-                indexFilter === indexing
-                  ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
-                  : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-              }
-            `}
-          >
-            <span className="min-w-0 break-words">
-              {indexing}
-            </span>
-
-            <Database className="size-3.5 shrink-0 text-[#D69B23]" />
-          </Link>
-        ) : (
-          <button
-            key={indexing}
-            type="button"
-            onClick={() => setIndexFilter(indexing)}
-            className={`
-              mb-1 flex w-full min-w-0
-              items-center justify-between gap-2
-              rounded-xl px-3 py-2.5
-              text-sm transition-all
-              ${
-                indexFilter === indexing
-                  ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
-                  : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-              }
-            `}
-          >
-            <span className="min-w-0 break-words">
-              {indexing}
-            </span>
-
-            <Database className="size-3.5 shrink-0 text-[#D69B23]" />
-          </button>
-        )
-      )}
-    </div>
-
-    {/* CLEAR */}
-    {!navigationMode && (
-      <div className="border-t border-[#012D68]/10 p-4 max-[480px]:p-3.5">
-        <button
-          type="button"
-          onClick={clearFilters}
-          className="
-            w-full rounded-xl
-            border border-[#012D68]/10
-            px-4 py-2.5
-            text-xs font-semibold
-            text-[#012D68]
-            transition
-            hover:border-[#D69B23]
-            hover:text-[#D69B23]
-          "
-        >
-          Clear all filters
-        </button>
-      </div>
-    )}
   </div>
-</aside>
+
+  {/* SCOPUS TIERS */}
+  <div>
+   <p className="mb-2 flex items-center gap-2 px-0.5 text-xs font-semibold uppercase tracking-wider text-[#012D68]">
+  <span className="h-4 w-1 rounded-full bg-[#D69B23]" />
+  Scopus
+</p>
+
+    <div className="grid grid-cols-4 gap-1.5">
+      {["Scopus Q1", "Scopus Q2", "Scopus Q3", "Scopus Q4"].map((tierName) => {
+        const selected = tierFilter === tierName;
+
+        const tierClass = `
+          flex min-w-0 items-center justify-center
+          rounded-md border px-1.5 py-2
+          text-xs transition-colors
+          ${
+            selected
+              ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
+              : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
+          }
+        `;
+
+        return navigationMode ? (
+          <Link
+            key={tierName}
+            href={`/associated-journals?tier=${encodeURIComponent(tierName)}`}
+            className={tierClass}
+          >
+            {tierName}
+          </Link>
+        ) : (
+          <button
+            key={tierName}
+            type="button"
+            onClick={() => setTierFilter?.(tierName)}
+            className={tierClass}
+          >
+            {tierName}
+          </button>
+        );
+      })}
+    </div>
+  </div>
+</div>
+            </div>
+          )}
+        </section>
+
+        {/* CLEAR FILTERS */}
+        {!navigationMode && (
+          <div className="p-3 max-[480px]:p-2.5">
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="w-full rounded-lg border border-[#012D68]/10 px-3 py-2 text-xs font-semibold text-[#012D68] transition hover:border-[#D69B23] hover:text-[#D69B23]"
+            >
+              Clear all filters
+            </button>
+          </div>
+        )}
+      </div>
+    </aside>
   );
 }
 
@@ -441,6 +517,7 @@ export function JournalDirectory({ category, indexing }) {
   const [subjectFilter, setSubjectFilter] = useState(category || "all");
 
   const [indexFilter, setIndexFilter] = useState(indexing || "all");
+  const [tierFilter, setTierFilter] = useState("all");
 
   const fetchJournals = async () => {
     try {
@@ -449,6 +526,10 @@ export function JournalDirectory({ category, indexing }) {
       );
       if (response) {
         setJournals(response.data);
+  console.log(
+  "First journal full data:",
+  JSON.stringify(response.data?.[0], null, 2)
+);
       } else toast(response.message);
     } catch (err) {
       console.log(err);
@@ -460,42 +541,130 @@ export function JournalDirectory({ category, indexing }) {
     fetchJournals();
   }, []);
 
-  const visibleJournals = useMemo(() => {
-    const query = search.trim().toLowerCase();
+const visibleJournals = useMemo(() => {
+  const query = search.trim().toLowerCase();
 
-    return journals
-      .filter((journal) => {
-        const subjectMatch =
-          subjectFilter === "all" || journal.category?.slug === subjectFilter;
+  return journals
+    .filter((journal) => {
+      // DOMAIN FILTER
+      const subjectMatch =
+        subjectFilter === "all" ||
+        journal.category?.slug === subjectFilter;
 
-        const indexingMatch =
-          indexFilter === "all" ||
-          journal.indexings.filter((indexing) => indexing.name == indexFilter)
-            .length;
+      // INDEXING FILTER
+      const indexings = Array.isArray(journal.indexings)
+        ? journal.indexings
+        : [];
 
-        const searchMatch =
-          !query ||
-          journal.title?.toLowerCase().includes(query) ||
-          journal.issn?.toLowerCase().includes(query) ||
-          journal.publisher?.toLowerCase().includes(query) ||
-          String(journal.publishing_since || "").includes(query) ||
-          journal.indexings?.some((item) =>
-            item.name?.toLowerCase().includes(query),
-          );
+      const indexingMatch =
+        indexFilter === "all" ||
+        indexings.some(
+          (item) =>
+            item.name?.toLowerCase() === indexFilter.toLowerCase()
+        );
 
-        return subjectMatch && indexingMatch && searchMatch;
-      })
-      .sort(
-        (a, b) =>
-          Number(b.publishing_since || 0) - Number(a.publishing_since || 0),
+     
+      // TIER FILTER
+      const journalTierNames = new Set();
+
+      const collectTierNames = (value, key = "") => {
+        if (Array.isArray(value)) {
+          value.forEach((item) => collectTierNames(item, key));
+          return;
+        }
+
+        if (value && typeof value === "object") {
+          const keyName = key.toLowerCase();
+
+          // A tier object may itself contain its display name.
+          if (keyName.includes("tier")) {
+            const name =
+              value.name ??
+              value.title ??
+              value.label ??
+              value.tier_name;
+
+            if (typeof name === "string" && name.trim()) {
+              journalTierNames.add(name.trim().toLowerCase());
+            }
+          }
+
+          Object.entries(value).forEach(([childKey, childValue]) => {
+            collectTierNames(childValue, childKey);
+          });
+
+          return;
+        }
+
+        if (
+          typeof value === "string" &&
+          key.toLowerCase().includes("tier") &&
+          value.trim()
+        ) {
+          journalTierNames.add(value.trim().toLowerCase());
+        }
+      };
+
+      collectTierNames(journal);
+
+      const tierMatch =
+        tierFilter === "all" ||
+        journalTierNames.has(tierFilter.trim().toLowerCase());
+
+
+          // SEARCH FILTER
+      const normalizedQuery = String(query || "").trim().toLowerCase();
+
+      const safeJournalTierNames = Array.isArray(journalTierNames)
+        ? journalTierNames
+        : journalTierNames && typeof journalTierNames === "object"
+          ? Object.values(journalTierNames)
+          : [];
+
+      const searchMatch =
+        !normalizedQuery ||
+        String(journal.title || "").toLowerCase().includes(normalizedQuery) ||
+        String(journal.issn || "").toLowerCase().includes(normalizedQuery) ||
+        String(journal.publisher || "").toLowerCase().includes(normalizedQuery) ||
+        String(journal.publishing_since || "").includes(normalizedQuery) ||
+        indexings.some((item) =>
+          String(item?.name || "").toLowerCase().includes(normalizedQuery)
+        ) ||
+        safeJournalTierNames.some((item) => {
+          const name =
+            typeof item === "string"
+              ? item
+              : item?.name ?? item?.title ?? item?.label ?? "";
+
+          return String(name).toLowerCase().includes(normalizedQuery);
+        });
+
+      return (
+        subjectMatch &&
+        indexingMatch &&
+        tierMatch &&
+        searchMatch
       );
-  }, [journals, search, subjectFilter, indexFilter]);
+    })
+    .sort(
+      (a, b) =>
+        Number(b.publishing_since || 0) -
+        Number(a.publishing_since || 0)
+    );
+}, [
+  journals,
+  search,
+  subjectFilter,
+  indexFilter,
+  tierFilter,
+]);
 
   function clearFilters() {
-    setSearch("");
-    setSubjectFilter("all");
-    setIndexFilter("all");
-  }
+  setSearch("");
+  setSubjectFilter("all");
+  setIndexFilter("all");
+  setTierFilter("all");
+}
 
   return (
   <section
@@ -728,13 +897,15 @@ export function JournalDirectory({ category, indexing }) {
           LEFT FILTER
       ================================= */}
 
-      <JournalFilterSidebar
-        subjectFilter={subjectFilter}
-        setSubjectFilter={setSubjectFilter}
-        indexFilter={indexFilter}
-        setIndexFilter={setIndexFilter}
-        clearFilters={clearFilters}
-      />
+    <JournalFilterSidebar
+  subjectFilter={subjectFilter}
+  setSubjectFilter={setSubjectFilter}
+  indexFilter={indexFilter}
+  setIndexFilter={setIndexFilter}
+  tierFilter={tierFilter}
+  setTierFilter={setTierFilter}
+  clearFilters={clearFilters}
+/>
 
       {/* =================================
           RIGHT JOURNAL RESULTS
