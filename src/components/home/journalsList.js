@@ -21,10 +21,12 @@ import {
   Building2,
   BookMarked,
   ChevronRight,
+  Loader2,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { div } from "motion/react-client";
 
 // export const journalCategories = [
 //   {
@@ -252,8 +254,8 @@ import axios from "axios";
 
 export function JournalShell({ children }) {
   return (
-   <section
-  className="
+    <section
+      className="
     relative overflow-hidden
     bg-[#F7F9FC]
     px-[6%] pt-6 pb-6
@@ -264,10 +266,10 @@ export function JournalShell({ children }) {
    gap-3 px-4 py-2.5
 max-[400px]:px-3
   "
->
-  {/* Background decoration */}
-  <div
-    className="
+    >
+      {/* Background decoration */}
+      <div
+        className="
       pointer-events-none absolute
       -right-40 -top-40
       h-[420px] w-[420px]
@@ -275,10 +277,10 @@ max-[400px]:px-3
       bg-[#012D68]/[0.05]
       blur-3xl
     "
-  />
+      />
 
-  <div
-    className="
+      <div
+        className="
       pointer-events-none absolute
       -bottom-44 -left-32
       h-[380px] w-[380px]
@@ -286,12 +288,10 @@ max-[400px]:px-3
       bg-[#D69B23]/[0.08]
       blur-3xl
     "
-  />
+      />
 
-  <div className="relative z-10 mx-auto max-w-7xl">
-    {children}
-  </div>
-</section>
+      <div className="relative z-10 mx-auto max-w-7xl">{children}</div>
+    </section>
   );
 }
 
@@ -302,7 +302,7 @@ export function JournalDirectory({ category }) {
   const fetchJournalCategories = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/categories`,
+        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/categories`
       );
       if (response) {
         setJournalCategories(response.data);
@@ -316,7 +316,7 @@ export function JournalDirectory({ category }) {
   const fetchJournals = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/journals/`
       );
       if (response) {
         setJournals(response.data);
@@ -334,16 +334,15 @@ export function JournalDirectory({ category }) {
 
   const selectedCategory = journalCategories.find((item) => item === category);
 
-  const visibleJournals =
-    category ?
-      journals.filter((journal) => journal.category === category)
+  const visibleJournals = category
+    ? journals.filter((journal) => journal.category === category)
     : journals;
 
   return (
     <JournalShell activeCategory={category}>
-    {/* Hero heading */}
-<div
-  className="
+      {/* Hero heading */}
+      <div
+        className="
     journal-enter relative
     mb-9 overflow-hidden
     rounded-[26px]
@@ -358,10 +357,10 @@ export function JournalDirectory({ category }) {
     max-[400px]:px-4
     max-[400px]:py-6
   "
->
-  {/* decorative circle */}
-  <div
-    className="
+      >
+        {/* decorative circle */}
+        <div
+          className="
       pointer-events-none
       absolute -right-16 -top-16
       h-48 w-48 rounded-full
@@ -370,10 +369,10 @@ export function JournalDirectory({ category }) {
       max-[480px]:-right-20
       max-[480px]:-top-20
     "
-  />
+        />
 
-  <div
-    className="
+        <div
+          className="
       pointer-events-none
       absolute bottom-0 right-8
       h-[2px] w-32
@@ -382,11 +381,11 @@ export function JournalDirectory({ category }) {
       max-[480px]:right-5
       max-[480px]:w-24
     "
-  />
+        />
 
-  <div className="relative z-10 min-w-0">
-    <div
-      className="
+        <div className="relative z-10 min-w-0">
+          <div
+            className="
         mb-4 inline-flex items-center gap-2
         rounded-full
         border border-[#D69B23]/25
@@ -398,13 +397,13 @@ export function JournalDirectory({ category }) {
         max-[480px]:text-[10px]
         max-[480px]:tracking-[0.14em]
       "
-    >
-      <Sparkles className="size-3.5 shrink-0" />
-      IARA Publications
-    </div>
+          >
+            <Sparkles className="size-3.5 shrink-0" />
+            IARA Publications
+          </div>
 
-    <h1
-      className="
+          <h1
+            className="
         max-w-3xl
         font-[Fraunces]
         text-[clamp(2.3rem,4vw,3.8rem)]
@@ -415,53 +414,54 @@ export function JournalDirectory({ category }) {
         max-[600px]:text-[clamp(2rem,9vw,3rem)]
         max-[400px]:text-[clamp(1.8rem,9vw,2.5rem)]
       "
-    >
-      {selectedCategory ?
-        selectedCategory.title
-      : <>
-          Explore Our{" "}
-          <span
-            className="
+          >
+            {selectedCategory ? (
+              selectedCategory.title
+            ) : (
+              <>
+                Explore Our{" "}
+                <span
+                  className="
               relative inline-block
               italic text-[#D69B23]
             "
-          >
-            Journals
-            <span
-              className="
+                >
+                  Journals
+                  <span
+                    className="
                 absolute -bottom-1 left-[5%]
                 h-[3px] w-[90%]
                 rounded-full
                 bg-[#D69B23]/55
               "
-            />
-          </span>
-        </>
-      }
-    </h1>
+                  />
+                </span>
+              </>
+            )}
+          </h1>
 
-    <p
-      className="
+          <p
+            className="
         mt-5 max-w-2xl
         text-[0.98rem]
         leading-7 text-slate-500
         max-[600px]:text-sm
         max-[600px]:leading-6
       "
-    >
-      Discover quality academic journals, explore research disciplines,
-      and find the right publication platform for your scholarly work.
-    </p>
+          >
+            Discover quality academic journals, explore research disciplines,
+            and find the right publication platform for your scholarly work.
+          </p>
 
-    {/* mini stats */}
-    <div
-      className="
+          {/* mini stats */}
+          <div
+            className="
         mt-6 flex flex-wrap items-center gap-3
         max-[480px]:gap-2
       "
-    >
-      <div
-        className="
+          >
+            <div
+              className="
           inline-flex items-center gap-2
           rounded-full
           bg-[#012D68]/[0.05]
@@ -470,13 +470,13 @@ export function JournalDirectory({ category }) {
           max-[480px]:px-3
           max-[480px]:text-[11px]
         "
-      >
-        <BookOpen className="size-4 shrink-0 text-[#D69B23]" />
-        {visibleJournals.length} Journals
-      </div>
+            >
+              <BookOpen className="size-4 shrink-0 text-[#D69B23]" />
+              {visibleJournals.length} Journals
+            </div>
 
-      <div
-        className="
+            <div
+              className="
           inline-flex items-center gap-2
           rounded-full
           bg-[#012D68]/[0.05]
@@ -485,13 +485,13 @@ export function JournalDirectory({ category }) {
           max-[480px]:px-3
           max-[480px]:text-[11px]
         "
-      >
-        <Layers3 className="size-4 shrink-0 text-[#D69B23]" />
-        {journalCategories.length} Disciplines
-      </div>
+            >
+              <Layers3 className="size-4 shrink-0 text-[#D69B23]" />
+              {journalCategories.length} Disciplines
+            </div>
 
-      <div
-        className="
+            <div
+              className="
           inline-flex items-center gap-2
           rounded-full
           bg-[#012D68]/[0.05]
@@ -500,23 +500,23 @@ export function JournalDirectory({ category }) {
           max-[480px]:px-3
           max-[480px]:text-[11px]
         "
-      >
-        <Globe2 className="size-4 shrink-0 text-[#D69B23]" />
-        Global Research
+            >
+              <Globe2 className="size-4 shrink-0 text-[#D69B23]" />
+              Global Research
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
 
-{/* Journals */}
-<div className="grid gap-5">
-  {visibleJournals.map((journal, index) => (
-    <JournalCard key={journal.slug} journal={journal} index={index} />
-  ))}
+      {/* Journals */}
+      <div className="grid gap-5">
+        {visibleJournals.map((journal, index) => (
+          <JournalCard key={journal.slug} journal={journal} index={index} />
+        ))}
 
-  {visibleJournals.length === 0 && (
-    <div
-      className="
+        {visibleJournals.length === 0 && (
+          <div
+            className="
         rounded-2xl border
         border-dashed border-[#012D68]/20
         bg-white px-6 py-12
@@ -524,28 +524,28 @@ export function JournalDirectory({ category }) {
         max-[480px]:px-4
         max-[480px]:py-10
       "
-    >
-      <BookOpen className="mx-auto size-8 text-[#D69B23]" />
+          >
+            <BookOpen className="mx-auto size-8 text-[#D69B23]" />
 
-      <h3 className="mt-4 text-lg font-semibold text-[#012D68]">
-        Journals coming soon
-      </h3>
+            <h3 className="mt-4 text-lg font-semibold text-[#012D68]">
+              Journals coming soon
+            </h3>
 
-      <p className="mt-2 text-sm text-slate-500">
-        Journals for this discipline will appear here.
-      </p>
-    </div>
-  )}
-</div>
+            <p className="mt-2 text-sm text-slate-500">
+              Journals for this discipline will appear here.
+            </p>
+          </div>
+        )}
+      </div>
     </JournalShell>
   );
 }
 
 function JournalCard({ journal, index }) {
   return (
-   <Link
-  href={`/journals/${journal.slug}`}
-  className="
+    <Link
+      href={`/journals/${journal.slug}`}
+      className="
     journal-card journal-enter
     group relative block
     overflow-hidden
@@ -564,13 +564,13 @@ function JournalCard({ journal, index }) {
     max-[600px]:p-5
     max-[480px]:p-4
   "
-  style={{
-    animationDelay: `${index * 90}ms`,
-  }}
->
-  {/* Gold top line */}
-  <span
-    className="
+      style={{
+        animationDelay: `${index * 90}ms`,
+      }}
+    >
+      {/* Gold top line */}
+      <span
+        className="
       absolute left-0 top-0
       h-[3px] w-0
       bg-gradient-to-r
@@ -578,11 +578,11 @@ function JournalCard({ journal, index }) {
       transition-all duration-500
       group-hover:w-full
     "
-  />
+      />
 
-  {/* Background hover glow */}
-  <div
-    className="
+      {/* Background hover glow */}
+      <div
+        className="
       pointer-events-none
       absolute -right-16 -top-16
       h-36 w-36
@@ -592,21 +592,21 @@ function JournalCard({ journal, index }) {
       transition-all duration-500
       group-hover:bg-[#D69B23]/10
     "
-  />
+      />
 
-  <div
-    className="
+      <div
+        className="
       relative z-10
       flex items-start
       justify-between gap-6
       max-[600px]:gap-4
       max-[480px]:gap-3
     "
-  >
-    <div className="min-w-0 flex-1">
-      {/* Category tag */}
-      <div
-        className="
+      >
+        <div className="min-w-0 flex-1">
+          {/* Category tag */}
+          <div
+            className="
           mb-4 inline-flex
           items-center gap-2
           rounded-full
@@ -622,14 +622,14 @@ function JournalCard({ journal, index }) {
           max-[480px]:py-1
           max-[480px]:text-[0.6rem]
         "
-      >
-        <BookMarked className="size-3.5 shrink-0 text-[#D69B23]" />
-        Journal Publication
-      </div>
+          >
+            <BookMarked className="size-3.5 shrink-0 text-[#D69B23]" />
+            Journal Publication
+          </div>
 
-      {/* Title */}
-      <h2
-        className="
+          {/* Title */}
+          <h2
+            className="
           max-w-3xl
           text-xl font-semibold
           leading-[1.45]
@@ -640,13 +640,13 @@ function JournalCard({ journal, index }) {
           max-[600px]:text-lg
           max-[480px]:text-base
         "
-      >
-        {journal.title}
-      </h2>
+          >
+            {journal.title}
+          </h2>
 
-      {/* Details */}
-      <div
-        className="
+          {/* Details */}
+          <div
+            className="
           mt-5 flex flex-wrap
           items-center gap-x-5
           gap-y-2
@@ -656,27 +656,27 @@ function JournalCard({ journal, index }) {
           max-[480px]:gap-y-1.5
           max-[480px]:text-[11px]
         "
-      >
-        <span className="flex items-center gap-1.5">
-          <Building2 className="size-3.5 shrink-0 text-[#D69B23]" />
-          {journal.publisher}
-        </span>
+          >
+            <span className="flex items-center gap-1.5">
+              <Building2 className="size-3.5 shrink-0 text-[#D69B23]" />
+              {journal.publisher}
+            </span>
 
-        <span className="flex items-center gap-1.5">
-          <Clock3 className="size-3.5 shrink-0 text-[#D69B23]" />
-          {journal.frequency}
-        </span>
+            <span className="flex items-center gap-1.5">
+              <Clock3 className="size-3.5 shrink-0 text-[#D69B23]" />
+              {journal.frequency}
+            </span>
 
-        <span className="flex items-center gap-1.5">
-          <MapPin className="size-3.5 shrink-0 text-[#D69B23]" />
-          {journal.origin}
-        </span>
-      </div>
-    </div>
+            <span className="flex items-center gap-1.5">
+              <MapPin className="size-3.5 shrink-0 text-[#D69B23]" />
+              {journal.origin}
+            </span>
+          </div>
+        </div>
 
-    {/* Arrow */}
-    <div
-      className="
+        {/* Arrow */}
+        <div
+          className="
         flex h-11 w-11 shrink-0
         items-center justify-center
         rounded-full
@@ -691,18 +691,18 @@ function JournalCard({ journal, index }) {
         max-[480px]:h-10
         max-[480px]:w-10
       "
-    >
-      <ArrowRight
-        className="
+        >
+          <ArrowRight
+            className="
           size-[18px]
           transition-transform duration-300
           group-hover:translate-x-0.5
           max-[480px]:size-4
         "
-      />
-    </div>
-  </div>
-</Link>
+          />
+        </div>
+      </div>
+    </Link>
   );
 }
 
@@ -714,63 +714,63 @@ export function JournalDetail({ journal }) {
 
   const currentYear = new Date().getFullYear();
   const tierDetails =
-  journal.indexing_tier_details ??
-  journal.journal_indexing_tier_details ??
-  journal.tiers ??
-  [];
+    journal.indexing_tier_details ??
+    journal.journal_indexing_tier_details ??
+    journal.tiers ??
+    [];
 
-const journalRankings = (() => {
-  const rankings = new Set();
+  const journalRankings = (() => {
+    const rankings = new Set();
 
-  const collectRankings = (value, parentKey = "") => {
-    if (Array.isArray(value)) {
-      value.forEach((item) => collectRankings(item, parentKey));
-      return;
-    }
+    const collectRankings = (value, parentKey = "") => {
+      if (Array.isArray(value)) {
+        value.forEach((item) => collectRankings(item, parentKey));
+        return;
+      }
 
-    if (!value || typeof value !== "object") return;
+      if (!value || typeof value !== "object") return;
 
-    Object.entries(value).forEach(([key, item]) => {
-      const normalizedKey = key.toLowerCase();
+      Object.entries(value).forEach(([key, item]) => {
+        const normalizedKey = key.toLowerCase();
 
-      if (
-        normalizedKey === "tier" ||
-        normalizedKey === "tiers" ||
-        normalizedKey.includes("tier_name")
-      ) {
-        const addTier = (tier) => {
-          if (typeof tier === "string" && tier.trim()) {
-            rankings.add(tier.trim());
-          } else if (tier && typeof tier === "object") {
-            const name =
-              tier.name ??
-              tier.title ??
-              tier.label ??
-              tier.tier_name;
+        if (
+          normalizedKey === "tier" ||
+          normalizedKey === "tiers" ||
+          normalizedKey.includes("tier_name")
+        ) {
+          const addTier = (tier) => {
+            if (typeof tier === "string" && tier.trim()) {
+              rankings.add(tier.trim());
+            } else if (tier && typeof tier === "object") {
+              const name =
+                tier.name ??
+                tier.title ??
+                tier.label ??
+                tier.tier_name;
 
-            if (typeof name === "string" && name.trim()) {
-              rankings.add(name.trim());
+              if (typeof name === "string" && name.trim()) {
+                rankings.add(name.trim());
+              }
             }
+          };
+
+          if (Array.isArray(item)) {
+            item.forEach(addTier);
+          } else {
+            addTier(item);
           }
-        };
-
-        if (Array.isArray(item)) {
-          item.forEach(addTier);
-        } else {
-          addTier(item);
         }
-      }
 
-      if (item && typeof item === "object") {
-        collectRankings(item, key);
-      }
-    });
-  };
+        if (item && typeof item === "object") {
+          collectRankings(item, key);
+        }
+      });
+    };
 
-  collectRankings(journal);
+    collectRankings(journal);
 
-  return [...rankings];
-})();
+    return [...rankings];
+  })();
 
   return (
     <article
@@ -850,14 +850,12 @@ const journalRankings = (() => {
             <div className="mt-3 flex flex-wrap items-center gap-3">
               {/* JOURNAL STATUS */}
               <span
-                className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
-                  journal.active ? "text-[#168A45]" : "text-red-600"
-                }`}
+                className={`inline-flex items-center gap-1.5 text-xs font-semibold ${journal.active ? "text-[#168A45]" : "text-red-600"
+                  }`}
               >
                 <span
-                  className={`size-2 rounded-full ${
-                    journal.active ? "bg-[#31B461]" : "bg-red-500"
-                  }`}
+                  className={`size-2 rounded-full ${journal.active ? "bg-[#31B461]" : "bg-red-500"
+                    }`}
                 />
 
                 {journal.active ? "Active" : "Discontinued"}
@@ -899,7 +897,7 @@ const journalRankings = (() => {
                       title={indexing.name}
                       className="flex items-center justify-center"
                     >
-                      {indexing.cover ?
+                      {indexing.cover ? (
                         <Image
                           src={indexing.cover}
                           alt={indexing.name}
@@ -907,10 +905,11 @@ const journalRankings = (() => {
                           height={50}
                           className="h-12 w-auto object-contain"
                         />
-                      : <span className="text-[11px] font-semibold text-[#012D68]">
+                      ) : (
+                        <span className="text-[11px] font-semibold text-[#012D68]">
                           {indexing.name}
                         </span>
-                      }
+                      )}
                     </div>
                   ))}
                 </div>
@@ -999,173 +998,173 @@ const journalRankings = (() => {
         border border-[#012D68]/10
       "
           >
-           
-{/* ISSN */}
-<div
-  className="
+
+            {/* ISSN */}
+            <div
+              className="
     grid grid-cols-[140px_1fr]
     gap-3 px-4 py-2.5 text-sm
     bg-[#012D68]/[0.025]
     max-[650px]:grid-cols-1
     max-[650px]:gap-1
   "
->
-  <dt className="font-semibold text-[#012D68]">ISSN</dt>
-  <dd className="leading-5 text-slate-600">
-    {journal.issn}
-  </dd>
-</div>
+            >
+              <dt className="font-semibold text-[#012D68]">ISSN</dt>
+              <dd className="leading-5 text-slate-600">
+                {journal.issn}
+              </dd>
+            </div>
 
 
-{/* JOURNAL RANKING */}
-<div
-  className="
+            {/* JOURNAL RANKING */}
+            <div
+              className="
     grid grid-cols-[140px_1fr]
     gap-3 px-4 py-2.5 text-sm
     bg-white
     max-[650px]:grid-cols-1
     max-[650px]:gap-1
   "
->
-  <dt className="font-semibold text-[#012D68]">
-    Journal Ranking
-  </dt>
+            >
+              <dt className="font-semibold text-[#012D68]">
+                Journal Ranking
+              </dt>
 
-  <dd className="leading-5 text-slate-600">
-    {journalRankings.length > 0
-      ? [...new Set(journalRankings)].join(", ")
-      : "Not available"}
-  </dd>
-</div>
+              <dd className="leading-5 text-slate-600">
+                {journalRankings.length > 0
+                  ? [...new Set(journalRankings)].join(", ")
+                  : "Not available"}
+              </dd>
+            </div>
 
 
 
-{/* ACTIVE YEAR */}
-<div
-  className="
+            {/* ACTIVE YEAR */}
+            <div
+              className="
     grid grid-cols-[140px_1fr]
     gap-3 px-4 py-2.5 text-sm
     bg-[#012D68]/[0.025]
     max-[650px]:grid-cols-1
     max-[650px]:gap-1
   "
->
-  <dt className="font-semibold text-[#012D68]">
-    Active Year
-  </dt>
+            >
+              <dt className="font-semibold text-[#012D68]">
+                Active Year
+              </dt>
 
-  <dd className="flex flex-wrap items-center gap-2">
-    <span className="leading-5 text-slate-600">
-      {journal.publishing_since
-        ? `${journal.publishing_since}`
-        : "Not available"}
-    </span>
+              <dd className="flex flex-wrap items-center gap-2">
+                <span className="leading-5 text-slate-600">
+                  {journal.publishing_since
+                    ? `${journal.publishing_since}`
+                    : "Not available"}
+                </span>
 
-    {journal.active ? (
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#31B461]/10 px-3 py-1 text-xs font-semibold text-[#168A45]">
-        <span className="flex size-4 items-center justify-center rounded-full bg-[#31B461] text-[10px] text-white">
-          ✓
-        </span>
-        Active
-      </span>
-    ) : (
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
-        <span className="flex size-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
-          ×
-        </span>
-        Discontinued
-      </span>
-    )}
-  </dd>
-</div>
+                {journal.active ? (
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#31B461]/10 px-3 py-1 text-xs font-semibold text-[#168A45]">
+                    <span className="flex size-4 items-center justify-center rounded-full bg-[#31B461] text-[10px] text-white">
+                      ✓
+                    </span>
+                    Active
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
+                    <span className="flex size-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
+                      ×
+                    </span>
+                    Discontinued
+                  </span>
+                )}
+              </dd>
+            </div>
 
 
 
-{/* SOURCE DETAILS */}
-{typeof journal.indexing_link === "string" &&
-  journal.indexing_link.trim() !== "" && (
-    <div
-      className="
+            {/* SOURCE DETAILS */}
+            {typeof journal.indexing_link === "string" &&
+              journal.indexing_link.trim() !== "" && (
+                <div
+                  className="
         grid grid-cols-[140px_1fr]
         gap-3 px-4 py-2.5 text-sm
         bg-white
         max-[650px]:grid-cols-1
         max-[650px]:gap-1
       "
-    >
-      <dt className="font-semibold text-[#012D68]">
-        Source Details
-      </dt>
+                >
+                  <dt className="font-semibold text-[#012D68]">
+                    Source Details
+                  </dt>
 
-      <dd>
-        <a
-          href={journal.indexing_link.trim()}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="
+                  <dd>
+                    <a
+                      href={journal.indexing_link.trim()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
             inline-flex items-center gap-1.5
             font-medium text-[#D69B23]
             transition-colors hover:text-[#012D68]
             hover:underline
           "
-        >
-          View Source Page
-          <ExternalLink className="size-3.5" />
-        </a>
-      </dd>
-    </div>
-  )}
+                    >
+                      View Source Page
+                      <ExternalLink className="size-3.5" />
+                    </a>
+                  </dd>
+                </div>
+              )}
 
 
-{/* PUBLISHER */}
-<div
-  className="
+            {/* PUBLISHER */}
+            <div
+              className="
     grid grid-cols-[140px_1fr]
     gap-3 px-4 py-2.5 text-sm
     bg-[#012D68]/[0.025]
     max-[650px]:grid-cols-1
     max-[650px]:gap-1
   "
->
-  <dt className="font-semibold text-[#012D68]">
-    Publisher
-  </dt>
-  <dd className="leading-5 text-slate-600">
-    {journal.publisher}
-  </dd>
-</div>
+            >
+              <dt className="font-semibold text-[#012D68]">
+                Publisher
+              </dt>
+              <dd className="leading-5 text-slate-600">
+                {journal.publisher}
+              </dd>
+            </div>
 
-{/* AIM & SCOPE */}
-<div
-  className="
+            {/* AIM & SCOPE */}
+            <div
+              className="
     grid grid-cols-[140px_1fr]
     gap-3 px-4 py-3 text-sm
     bg-white
     max-[650px]:grid-cols-1
     max-[650px]:gap-1.5
   "
->
-  <dt className="font-semibold text-[#012D68]">
-    Aim &amp; Scope
-  </dt>
-  <dd className="leading-6 text-slate-600">
-    <div className="space-y-2">
-      <p className="text-justify">
-        <b className="font-semibold text-slate-700">
-          Aim:
-        </b>{" "}
-        {journal.aim}
-      </p>
+            >
+              <dt className="font-semibold text-[#012D68]">
+                Aim &amp; Scope
+              </dt>
+              <dd className="leading-6 text-slate-600">
+                <div className="space-y-2">
+                  <p className="text-justify">
+                    <b className="font-semibold text-slate-700">
+                      Aim:
+                    </b>{" "}
+                    {journal.aim}
+                  </p>
 
-      <p className="text-justify">
-        <b className="font-semibold text-slate-700">
-          Scope:
-        </b>{" "}
-        {journal.scope}
-      </p>
-    </div>
-  </dd>
-</div>
+                  <p className="text-justify">
+                    <b className="font-semibold text-slate-700">
+                      Scope:
+                    </b>{" "}
+                    {journal.scope}
+                  </p>
+                </div>
+              </dd>
+            </div>
 
           </div>
         </section>
@@ -1222,7 +1221,7 @@ backdrop-blur-[2px]
             </button>
 
             {/* SUCCESS STATE */}
-            {isSubmitted ?
+            {isSubmitted ? (
               <div
                 className="
             flex min-h-[270px]
@@ -1270,7 +1269,8 @@ backdrop-blur-[2px]
                   Submission received successfully
                 </div>
               </div>
-            : /* FORM STATE */
+            ) : (
+              /* FORM STATE */
               <>
                 {/* HEADER */}
                 <div className="mb-5 text-center">
@@ -1289,39 +1289,39 @@ backdrop-blur-[2px]
                   onSubmit={async (e) => {
                     e.preventDefault();
 
+                    if (isSubmitting) return;
+
                     setSubmitError("");
 
                     const form = e.currentTarget;
-                    const formData = new FormData(form);
+                    const rawFormData = new FormData(form);
 
-                    const data = {
-                      message: journal.title,
-                      name: formData.get("name"),
-                      email: formData.get("email"),
-                      phone_number: formData.get("phone_number"),
-                    };
+                    const formData = new FormData();
+                    formData.append("name", rawFormData.get("name"));
+                    formData.append("email", rawFormData.get("email"));
+                    formData.append("phoneNumber", rawFormData.get("phone_number"));
+                    formData.append("journalName", journal.title);
+
+                    // Append file if selected
+                    const manuscriptFile = rawFormData.get("manuscript");
+                    if (manuscriptFile && manuscriptFile.size > 0) {
+                      formData.append("manuscript", manuscriptFile);
+                    }
 
                     try {
-                      const response = await fetch(
-                        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/forms/contact/addcontactquery`,
+                      setIsSubmitting(true);
+                      const response = await axios.post(
+                        `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/forms/manuscript/submit`,
+                        formData,
                         {
-                          method: "POST",
                           headers: {
-                            "Content-Type": "application/json",
+                            "Content-Type": "multipart/form-data",
                           },
-                          body: JSON.stringify(data),
-                        },
+                        }
                       );
 
-                      const result = await response.json();
-
+                      const result = response.data;
                       console.log("Backend response:", result);
-
-                      if (!response.ok || !result.success) {
-                        throw new Error(
-                          result?.message || "Unable to submit the form.",
-                        );
-                      }
 
                       // Success
                       setIsSubmitted(true);
@@ -1333,8 +1333,10 @@ backdrop-blur-[2px]
 
                       setSubmitError(
                         error.message ||
-                          "Something went wrong. Please try again.",
+                        "Something went wrong. Please try again."
                       );
+                    } finally {
+                      setIsSubmitting(false);
                     }
                   }}
                   className="  grid grid-cols-2 gap-x-3 gap-y-3.5
@@ -1429,6 +1431,7 @@ backdrop-blur-[2px]
         focus:ring-2
         focus:ring-[#012D68]/10
       "
+                      pattern="[1-9][0-9]{9}"
                     />
                   </div>
 
@@ -1483,9 +1486,33 @@ backdrop-blur-[2px]
 
                   {/* SUBMIT BUTTON */}
                   <div className="flex items-end">
-                    <button
-                      type="submit"
-                      className="
+                    {isSubmitting ?
+                      <button
+                        type="button"
+                        disabled
+                        className="
+        flex
+        items-center
+        gap-2
+        h-10 w-fit
+        rounded-lg
+        bg-[#012D68]
+        px-4
+        text-sm font-semibold
+        text-white
+        shadow-sm
+        transition-all duration-200
+        hover:bg-[#011F49]
+        hover:shadow-md
+        active:scale-[0.98]
+        cursor-not-allowed
+      "
+                      >
+                        Submitting <span className="animate-spin"><Loader2 /></span>
+                      </button> :
+                      <button
+                        type="submit"
+                        className="
         h-10 w-full
         rounded-lg
         bg-[#012D68]
@@ -1498,9 +1525,9 @@ backdrop-blur-[2px]
         hover:shadow-md
         active:scale-[0.98]
       "
-                    >
-                      Submit Manuscript
-                    </button>
+                      >
+                        Submit Manuscript
+                      </button>}
                   </div>
                 </form>
 
@@ -1510,7 +1537,7 @@ backdrop-blur-[2px]
                   </p>
                 )}
               </>
-            }
+            )}
           </div>
         </div>
       )}

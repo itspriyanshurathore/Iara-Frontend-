@@ -13,6 +13,7 @@ export default async function AssociatedJournalsPage({ searchParams }) {
         <JournalDirectory
           category={params?.category || "all"}
           indexing={params?.indexing || "all"}
+          journalTier={params?.journalTier || "all"}
         />
       </main>
 

@@ -139,9 +139,8 @@ export function JournalFilterSidebar({
           >
             <span>Domain Based</span>
             <ChevronRight
-              className={`size-4 transition-transform ${
-                domainOpen ? "rotate-90" : ""
-              }`}
+              className={`size-4 transition-transform ${domainOpen ? "rotate-90" : ""
+                }`}
             />
           </button>
 
@@ -150,11 +149,10 @@ export function JournalFilterSidebar({
               {navigationMode ? (
                 <Link
                   href="/associated-journals"
-                  className={`${optionClass} ${
-                    subjectFilter === "all"
+                  className={`${optionClass} ${subjectFilter === "all"
                       ? "bg-[#012D68] font-semibold text-white"
                       : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
-                  }`}
+                    }`}
                 >
                   <span className="min-w-0 break-words">All Journals</span>
                   <ChevronRight className="size-4 shrink-0" />
@@ -163,11 +161,10 @@ export function JournalFilterSidebar({
                 <button
                   type="button"
                   onClick={() => setSubjectFilter("all")}
-                  className={`${optionClass} ${
-                    subjectFilter === "all"
+                  className={`${optionClass} ${subjectFilter === "all"
                       ? "bg-[#012D68] font-semibold text-white"
                       : "text-slate-600 hover:bg-[#012D68]/[0.05] hover:text-[#012D68]"
-                  }`}
+                    }`}
                 >
                   <span className="min-w-0 break-words">All Journals</span>
                   <ChevronRight className="size-4 shrink-0" />
@@ -181,21 +178,19 @@ export function JournalFilterSidebar({
                     href={`/associated-journals?category=${encodeURIComponent(
                       subject.slug
                     )}`}
-                    className={`capitalize ${optionClass} ${
-                      subjectFilter === subject.slug
+                    className={`capitalize ${optionClass} ${subjectFilter === subject.slug
                         ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
                         : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
-                    }`}
+                      }`}
                   >
                     <span className="min-w-0 break-words">
                       {subject.title}
                     </span>
                     <ChevronRight
-                      className={`size-3.5 shrink-0 ${
-                        subjectFilter === subject.slug
+                      className={`size-3.5 shrink-0 ${subjectFilter === subject.slug
                           ? "text-[#D69B23]"
                           : "text-slate-300"
-                      }`}
+                        }`}
                     />
                   </Link>
                 ) : (
@@ -203,21 +198,19 @@ export function JournalFilterSidebar({
                     key={subject.slug}
                     type="button"
                     onClick={() => setSubjectFilter(subject.slug)}
-                    className={`capitalize ${optionClass} ${
-                      subjectFilter === subject.slug
+                    className={`capitalize ${optionClass} ${subjectFilter === subject.slug
                         ? "bg-[#D69B23]/10 font-semibold text-[#012D68]"
                         : "text-slate-500 hover:bg-[#012D68]/[0.04] hover:text-[#012D68]"
-                    }`}
+                      }`}
                   >
                     <span className="min-w-0 break-words">
                       {subject.title}
                     </span>
                     <ChevronRight
-                      className={`size-3.5 shrink-0 ${
-                        subjectFilter === subject.slug
+                      className={`size-3.5 shrink-0 ${subjectFilter === subject.slug
                           ? "text-[#D69B23]"
                           : "text-slate-300"
-                      }`}
+                        }`}
                     />
                   </button>
                 )
@@ -236,9 +229,8 @@ export function JournalFilterSidebar({
           >
             <span>Indexing Based</span>
             <ChevronRight
-              className={`size-4 transition-transform ${
-                indexingOpen ? "rotate-90" : ""
-              }`}
+              className={`size-4 transition-transform ${indexingOpen ? "rotate-90" : ""
+                }`}
             />
           </button>
 
@@ -247,11 +239,10 @@ export function JournalFilterSidebar({
               {navigationMode ? (
                 <Link
                   href="/associated-journals"
-                  className={`${optionClass} mb-2 ${
-                    indexFilter === "all"
+                  className={`${optionClass} mb-2 ${indexFilter === "all"
                       ? "bg-[#012D68] font-semibold text-white"
                       : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-                  }`}
+                    }`}
                 >
                   <span>All Indexing</span>
                   <Database className="size-4 shrink-0" />
@@ -260,11 +251,10 @@ export function JournalFilterSidebar({
                 <button
                   type="button"
                   onClick={() => setIndexFilter("all")}
-                  className={`${optionClass} mb-2 ${
-                    indexFilter === "all"
+                  className={`${optionClass} mb-2 ${indexFilter === "all"
                       ? "bg-[#012D68] font-semibold text-white"
                       : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-                  }`}
+                    }`}
                 >
                   <span>All Indexing</span>
                   <Database className="size-4 shrink-0" />
@@ -279,11 +269,10 @@ export function JournalFilterSidebar({
                       href={`/associated-journals?indexing=${encodeURIComponent(
                         indexing
                       )}`}
-                      className={`${compactOptionClass} ${
-                        indexFilter === indexing
+                      className={`${compactOptionClass} ${indexFilter === indexing
                           ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
                           : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
-                      }`}
+                        }`}
                     >
                       {indexing}
                     </Link>
@@ -292,11 +281,10 @@ export function JournalFilterSidebar({
                       key={indexing}
                       type="button"
                       onClick={() => setIndexFilter(indexing)}
-                      className={`${compactOptionClass} ${
-                        indexFilter === indexing
+                      className={`${compactOptionClass} ${indexFilter === indexing
                           ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
                           : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
-                      }`}
+                        }`}
                     >
                       {indexing}
                     </button>
@@ -317,9 +305,8 @@ export function JournalFilterSidebar({
           >
             <span>Tier Based</span>
             <ChevronRight
-              className={`size-4 transition-transform ${
-                tierOpen ? "rotate-90" : ""
-              }`}
+              className={`size-4 transition-transform ${tierOpen ? "rotate-90" : ""
+                }`}
             />
           </button>
 
@@ -328,11 +315,10 @@ export function JournalFilterSidebar({
               {navigationMode ? (
                 <Link
                   href="/associated-journals"
-                  className={`${optionClass} mb-2 ${
-                    tierFilter === "all"
+                  className={`${optionClass} mb-2 ${tierFilter === "all"
                       ? "bg-[#012D68] font-semibold text-white"
                       : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-                  }`}
+                    }`}
                 >
                   <span>All Tiers</span>
                   <ChevronRight className="size-4 shrink-0" />
@@ -341,106 +327,55 @@ export function JournalFilterSidebar({
                 <button
                   type="button"
                   onClick={() => setTierFilter?.("all")}
-                  className={`${optionClass} mb-2 ${
-                    tierFilter === "all"
+                  className={`${optionClass} mb-2 ${tierFilter === "all"
                       ? "bg-[#012D68] font-semibold text-white"
                       : "text-slate-500 hover:bg-[#012D68]/[0.05]"
-                  }`}
+                    }`}
                 >
                   <span>All Tiers</span>
                   <ChevronRight className="size-4 shrink-0" />
                 </button>
               )}
 
-            <div className="space-y-3 pb-1">
-  {/* ABDC TIERS */}
-  <div>
-  <p className="mb-2 flex items-center gap-2 px-0.5 text-xs font-semibold uppercase tracking-wider text-[#012D68]">
-  <span className="h-4 w-1 rounded-full bg-[#D69B23]" />
-  ABDC
-</p>
+              <div className="space-y-3 pb-1">
+                <div>
 
-    <div className="grid grid-cols-4 gap-1.5">
-      {["ABDC A", "ABDC B", "ABDC C", "ABDC D"].map((tierName) => {
-        const selected = tierFilter === tierName;
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {indexingOptions.tiers.map((tierName) => {
+                      const selected = tierFilter === tierName;
 
-        const tierClass = `
+                      const tierClass = `
           flex min-w-0 items-center justify-center
           rounded-md border px-1.5 py-2
           text-xs transition-colors
-          ${
-            selected
-              ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
-              : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
-          }
+          ${selected
+                          ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
+                          : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
+                        }
         `;
 
-        return navigationMode ? (
-          <Link
-            key={tierName}
-            href={`/associated-journals?tier=${encodeURIComponent(tierName)}`}
-            className={tierClass}
-          >
-            {tierName}
-          </Link>
-        ) : (
-          <button
-            key={tierName}
-            type="button"
-            onClick={() => setTierFilter?.(tierName)}
-            className={tierClass}
-          >
-            {tierName}
-          </button>
-        );
-      })}
-    </div>
-  </div>
-
-  {/* SCOPUS TIERS */}
-  <div>
-   <p className="mb-2 flex items-center gap-2 px-0.5 text-xs font-semibold uppercase tracking-wider text-[#012D68]">
-  <span className="h-4 w-1 rounded-full bg-[#D69B23]" />
-  Scopus
-</p>
-
-    <div className="grid grid-cols-4 gap-1.5">
-      {["Scopus Q1", "Scopus Q2", "Scopus Q3", "Scopus Q4"].map((tierName) => {
-        const selected = tierFilter === tierName;
-
-        const tierClass = `
-          flex min-w-0 items-center justify-center
-          rounded-md border px-1.5 py-2
-          text-xs transition-colors
-          ${
-            selected
-              ? "border-[#012D68] bg-[#012D68] font-semibold text-white"
-              : "border-[#012D68]/10 bg-white text-slate-600 hover:border-[#D69B23] hover:text-[#012D68]"
-          }
-        `;
-
-        return navigationMode ? (
-          <Link
-            key={tierName}
-            href={`/associated-journals?tier=${encodeURIComponent(tierName)}`}
-            className={tierClass}
-          >
-            {tierName}
-          </Link>
-        ) : (
-          <button
-            key={tierName}
-            type="button"
-            onClick={() => setTierFilter?.(tierName)}
-            className={tierClass}
-          >
-            {tierName}
-          </button>
-        );
-      })}
-    </div>
-  </div>
-</div>
+                      return navigationMode ? (
+                        <Link
+                          key={tierName}
+                          href={`/associated-journals?tier=${encodeURIComponent(tierName)}`}
+                          className={tierClass}
+                        >
+                          {tierName}
+                        </Link>
+                      ) : (
+                        <button
+                          key={tierName}
+                          type="button"
+                          onClick={() => setTierFilter?.(tierName)}
+                          className={tierClass}
+                        >
+                          {tierName}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </section>
@@ -464,8 +399,8 @@ export function JournalFilterSidebar({
 
 export function JournalShell({ children }) {
   return (
-  <section
-  className="
+    <section
+      className="
     relative overflow-hidden
     bg-[#F7F9FC]
     px-[3%] pt-0 pb-6
@@ -475,10 +410,10 @@ export function JournalShell({ children }) {
     max-[600px]:pb-10
     max-[400px]:px-3
   "
->
-  {/* Background decoration */}
-  <div
-    className="
+    >
+      {/* Background decoration */}
+      <div
+        className="
       pointer-events-none absolute
       -right-40 -top-40
       h-[420px] w-[420px]
@@ -488,10 +423,10 @@ export function JournalShell({ children }) {
       max-[600px]:h-[300px]
       max-[600px]:w-[300px]
     "
-  />
+      />
 
-  <div
-    className="
+      <div
+        className="
       pointer-events-none absolute
       -bottom-44 -left-32
       h-[380px] w-[380px]
@@ -501,16 +436,16 @@ export function JournalShell({ children }) {
       max-[600px]:h-[280px]
       max-[600px]:w-[280px]
     "
-  />
+      />
 
-  <div className="relative z-10 mx-auto w-full max-w-[1450px]">
-    {children}
-  </div>
-</section>
+      <div className="relative z-10 mx-auto w-full max-w-[1450px]">
+        {children}
+      </div>
+    </section>
   );
 }
 
-export function JournalDirectory({ category, indexing }) {
+export function JournalDirectory({ category, indexing, journalTier }) {
   const [search, setSearch] = useState("");
   const [journals, setJournals] = useState([]);
 
@@ -526,10 +461,10 @@ export function JournalDirectory({ category, indexing }) {
       );
       if (response) {
         setJournals(response.data);
-  console.log(
-  "First journal full data:",
-  JSON.stringify(response.data?.[0], null, 2)
-);
+        console.log(
+          "First journal full data:",
+          JSON.stringify(response.data?.[0], null, 2)
+        );
       } else toast(response.message);
     } catch (err) {
       console.log(err);
@@ -541,134 +476,134 @@ export function JournalDirectory({ category, indexing }) {
     fetchJournals();
   }, []);
 
-const visibleJournals = useMemo(() => {
-  const query = search.trim().toLowerCase();
+  const visibleJournals = useMemo(() => {
+    const query = search.trim().toLowerCase();
 
-  return journals
-    .filter((journal) => {
-      // DOMAIN FILTER
-      const subjectMatch =
-        subjectFilter === "all" ||
-        journal.category?.slug === subjectFilter;
+    return journals
+      .filter((journal) => {
+        // DOMAIN FILTER
+        const subjectMatch =
+          subjectFilter === "all" ||
+          journal.category?.slug === subjectFilter;
 
-      // INDEXING FILTER
-      const indexings = Array.isArray(journal.indexings)
-        ? journal.indexings
-        : [];
-
-      const indexingMatch =
-        indexFilter === "all" ||
-        indexings.some(
-          (item) =>
-            item.name?.toLowerCase() === indexFilter.toLowerCase()
-        );
-
-     
-      // TIER FILTER
-      const journalTierNames = new Set();
-
-      const collectTierNames = (value, key = "") => {
-        if (Array.isArray(value)) {
-          value.forEach((item) => collectTierNames(item, key));
-          return;
-        }
-
-        if (value && typeof value === "object") {
-          const keyName = key.toLowerCase();
-
-          // A tier object may itself contain its display name.
-          if (keyName.includes("tier")) {
-            const name =
-              value.name ??
-              value.title ??
-              value.label ??
-              value.tier_name;
-
-            if (typeof name === "string" && name.trim()) {
-              journalTierNames.add(name.trim().toLowerCase());
-            }
-          }
-
-          Object.entries(value).forEach(([childKey, childValue]) => {
-            collectTierNames(childValue, childKey);
-          });
-
-          return;
-        }
-
-        if (
-          typeof value === "string" &&
-          key.toLowerCase().includes("tier") &&
-          value.trim()
-        ) {
-          journalTierNames.add(value.trim().toLowerCase());
-        }
-      };
-
-      collectTierNames(journal);
-
-      const tierMatch =
-        tierFilter === "all" ||
-        journalTierNames.has(tierFilter.trim().toLowerCase());
-
-
-          // SEARCH FILTER
-      const normalizedQuery = String(query || "").trim().toLowerCase();
-
-      const safeJournalTierNames = Array.isArray(journalTierNames)
-        ? journalTierNames
-        : journalTierNames && typeof journalTierNames === "object"
-          ? Object.values(journalTierNames)
+        // INDEXING FILTER
+        const indexings = Array.isArray(journal.indexings)
+          ? journal.indexings
           : [];
 
-      const searchMatch =
-        !normalizedQuery ||
-        String(journal.title || "").toLowerCase().includes(normalizedQuery) ||
-        String(journal.issn || "").toLowerCase().includes(normalizedQuery) ||
-        String(journal.publisher || "").toLowerCase().includes(normalizedQuery) ||
-        String(journal.publishing_since || "").includes(normalizedQuery) ||
-        indexings.some((item) =>
-          String(item?.name || "").toLowerCase().includes(normalizedQuery)
-        ) ||
-        safeJournalTierNames.some((item) => {
-          const name =
-            typeof item === "string"
-              ? item
-              : item?.name ?? item?.title ?? item?.label ?? "";
+        const indexingMatch =
+          indexFilter === "all" ||
+          indexings.some(
+            (item) =>
+              item.name?.toLowerCase() === indexFilter.toLowerCase()
+          );
 
-          return String(name).toLowerCase().includes(normalizedQuery);
-        });
 
-      return (
-        subjectMatch &&
-        indexingMatch &&
-        tierMatch &&
-        searchMatch
+        // TIER FILTER
+        const journalTierNames = new Set();
+
+        const collectTierNames = (value, key = "") => {
+          if (Array.isArray(value)) {
+            value.forEach((item) => collectTierNames(item, key));
+            return;
+          }
+
+          if (value && typeof value === "object") {
+            const keyName = key.toLowerCase();
+
+            // A tier object may itself contain its display name.
+            if (keyName.includes("tier")) {
+              const name =
+                value.name ??
+                value.title ??
+                value.label ??
+                value.tier_name;
+
+              if (typeof name === "string" && name.trim()) {
+                journalTierNames.add(name.trim().toLowerCase());
+              }
+            }
+
+            Object.entries(value).forEach(([childKey, childValue]) => {
+              collectTierNames(childValue, childKey);
+            });
+
+            return;
+          }
+
+          if (
+            typeof value === "string" &&
+            key.toLowerCase().includes("tier") &&
+            value.trim()
+          ) {
+            journalTierNames.add(value.trim().toLowerCase());
+          }
+        };
+
+        collectTierNames(journal);
+
+        const tierMatch =
+          tierFilter === "all" ||
+          journalTierNames.has(tierFilter.trim().toLowerCase());
+
+
+        // SEARCH FILTER
+        const normalizedQuery = String(query || "").trim().toLowerCase();
+
+        const safeJournalTierNames = Array.isArray(journalTierNames)
+          ? journalTierNames
+          : journalTierNames && typeof journalTierNames === "object"
+            ? Object.values(journalTierNames)
+            : [];
+
+        const searchMatch =
+          !normalizedQuery ||
+          String(journal.title || "").toLowerCase().includes(normalizedQuery) ||
+          String(journal.issn || "").toLowerCase().includes(normalizedQuery) ||
+          String(journal.publisher || "").toLowerCase().includes(normalizedQuery) ||
+          String(journal.publishing_since || "").includes(normalizedQuery) ||
+          indexings.some((item) =>
+            String(item?.name || "").toLowerCase().includes(normalizedQuery)
+          ) ||
+          safeJournalTierNames.some((item) => {
+            const name =
+              typeof item === "string"
+                ? item
+                : item?.name ?? item?.title ?? item?.label ?? "";
+
+            return String(name).toLowerCase().includes(normalizedQuery);
+          });
+
+        return (
+          subjectMatch &&
+          indexingMatch &&
+          tierMatch &&
+          searchMatch
+        );
+      })
+      .sort(
+        (a, b) =>
+          Number(b.publishing_since || 0) -
+          Number(a.publishing_since || 0)
       );
-    })
-    .sort(
-      (a, b) =>
-        Number(b.publishing_since || 0) -
-        Number(a.publishing_since || 0)
-    );
-}, [
-  journals,
-  search,
-  subjectFilter,
-  indexFilter,
-  tierFilter,
-]);
+  }, [
+    journals,
+    search,
+    subjectFilter,
+    indexFilter,
+    tierFilter,
+  ]);
 
   function clearFilters() {
-  setSearch("");
-  setSubjectFilter("all");
-  setIndexFilter("all");
-  setTierFilter("all");
-}
+    setSearch("");
+    setSubjectFilter("all");
+    setIndexFilter("all");
+    setTierFilter("all");
+  }
 
   return (
-  <section
-  className="
+    <section
+      className="
     relative bg-[#F7F9FC]
     px-[6%] py-16
     max-[1200px]:px-[4%]
@@ -677,28 +612,28 @@ const visibleJournals = useMemo(() => {
     max-[600px]:py-12
     max-[400px]:px-3
   "
->
-  <div className="mx-auto max-w-7xl">
+    >
+      <div className="mx-auto max-w-7xl">
 
-    {/* =================================
+        {/* =================================
         HEADER
     ================================= */}
 
-    <div className="mb-7 text-center">
-      <span
-        className="
+        <div className="mb-7 text-center">
+          <span
+            className="
           mb-2 inline-block
           text-[11px] font-semibold
           uppercase
           tracking-[0.2em]
           text-[#D69B23]
         "
-      >
-        IARA PUBLICATION
-      </span>
+          >
+            IARA PUBLICATION
+          </span>
 
-      <h1
-        className="
+          <h1
+            className="
           font-italic
           text-[clamp(2.2rem,5vw,4.8rem)]
           font-medium
@@ -709,13 +644,13 @@ const visibleJournals = useMemo(() => {
           max-[700px]:leading-[1.05]
           max-[480px]:text-[clamp(2rem,10vw,3rem)]
         "
-      >
-        Associated Journals{" "}
-        <em className="font-normal text-[#D69B23]">with IARA.</em>
-      </h1>
+          >
+            Associated Journals{" "}
+            <em className="font-normal text-[#D69B23]">with IARA.</em>
+          </h1>
 
-      <p
-        className="
+          <p
+            className="
           mx-auto
           mt-3
           max-w-2xl
@@ -725,18 +660,18 @@ const visibleJournals = useMemo(() => {
           max-[600px]:text-sm
           max-[600px]:leading-5
         "
-      >
-        Search and explore associated journals by subject area, ISSN,
-        publisher and indexing database.
-      </p>
-    </div>
+          >
+            Search and explore associated journals by subject area, ISSN,
+            publisher and indexing database.
+          </p>
+        </div>
 
-    {/* =================================
+        {/* =================================
         SEARCH AREA
     ================================= */}
 
-    <div
-      className="
+        <div
+          className="
         mb-8
         rounded-[20px]
         border border-[#012D68]/10
@@ -745,17 +680,17 @@ const visibleJournals = useMemo(() => {
         shadow-[0_15px_40px_rgba(1,45,104,0.06)]
         max-[480px]:p-3
       "
-    >
-      <div
-        className="
+        >
+          <div
+            className="
           flex items-center
           gap-3
           max-[700px]:flex-col
           max-[700px]:items-stretch
         "
-      >
-        <div
-          className="
+          >
+            <div
+              className="
             flex h-13 min-w-0 flex-1
             items-center gap-3
             rounded-xl
@@ -767,19 +702,19 @@ const visibleJournals = useMemo(() => {
             focus-within:bg-white
             max-[480px]:px-3
           "
-        >
-          <Search
-            className="
+            >
+              <Search
+                className="
               size-5 shrink-0
               text-[#D69B23]
             "
-          />
+              />
 
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by journal title, ISSN, subject area, publisher..."
-            className="
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by journal title, ISSN, subject area, publisher..."
+                className="
               h-13 min-w-0 w-full
               bg-transparent
               text-sm
@@ -788,28 +723,28 @@ const visibleJournals = useMemo(() => {
               placeholder:text-slate-400
               max-[480px]:text-[13px]
             "
-          />
+              />
 
-          {search && (
-            <button
-              type="button"
-              onClick={() => setSearch("")}
-              className="shrink-0"
-            >
-              <X
-                className="
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch("")}
+                  className="shrink-0"
+                >
+                  <X
+                    className="
                   size-4
                   text-slate-400
                   hover:text-[#012D68]
                 "
-              />
-            </button>
-          )}
-        </div>
+                  />
+                </button>
+              )}
+            </div>
 
-        <button
-          type="button"
-          className="
+            <button
+              type="button"
+              className="
             inline-flex h-13 shrink-0
             items-center
             justify-center
@@ -825,44 +760,44 @@ const visibleJournals = useMemo(() => {
             hover:bg-[#D69B23]
             max-[700px]:w-full
           "
-        >
-          <Search className="size-4" />
-          Search
-        </button>
-      </div>
+            >
+              <Search className="size-4" />
+              Search
+            </button>
+          </div>
 
-      {/* quick search labels */}
+          {/* quick search labels */}
 
-      <div
-        className="
+          <div
+            className="
           mt-4 flex
           flex-wrap
           items-center
           gap-2
           max-[480px]:gap-1.5
         "
-      >
-        <span
-          className="
+          >
+            <span
+              className="
             mr-1 text-xs
             font-semibold
             text-slate-400
           "
-        >
-          Search by:
-        </span>
+            >
+              Search by:
+            </span>
 
-        {[
-          "Journal Name",
-          "ISSN",
-          "Year",
-          "Subject Area",
-          "Indexing",
-          "Publisher",
-        ].map((item) => (
-          <span
-            key={item}
-            className="
+            {[
+              "Journal Name",
+              "ISSN",
+              "Year",
+              "Subject Area",
+              "Indexing",
+              "Publisher",
+            ].map((item) => (
+              <span
+                key={item}
+                className="
               rounded-full
               bg-[#012D68]/[0.05]
               px-3 py-1.5
@@ -873,95 +808,95 @@ const visibleJournals = useMemo(() => {
               max-[480px]:py-1
               max-[480px]:text-[10px]
             "
-          >
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
 
-    {/* =================================
+        {/* =================================
         DIRECTORY LAYOUT
     ================================= */}
 
-    <div
-      className="
+        <div
+          className="
         grid
         grid-cols-[280px_minmax(0,1fr)]
         gap-7
         max-[1100px]:grid-cols-[250px_minmax(0,1fr)]
         max-[900px]:grid-cols-1
       "
-    >
-      {/* =================================
+        >
+          {/* =================================
           LEFT FILTER
       ================================= */}
 
-    <JournalFilterSidebar
-  subjectFilter={subjectFilter}
-  setSubjectFilter={setSubjectFilter}
-  indexFilter={indexFilter}
-  setIndexFilter={setIndexFilter}
-  tierFilter={tierFilter}
-  setTierFilter={setTierFilter}
-  clearFilters={clearFilters}
-/>
+          <JournalFilterSidebar
+            subjectFilter={subjectFilter}
+            setSubjectFilter={setSubjectFilter}
+            indexFilter={indexFilter}
+            setIndexFilter={setIndexFilter}
+            tierFilter={tierFilter}
+            setTierFilter={setTierFilter}
+            clearFilters={clearFilters}
+          />
 
-      {/* =================================
+          {/* =================================
           RIGHT JOURNAL RESULTS
       ================================= */}
 
-      <div className="min-w-0">
+          <div className="min-w-0">
 
-        {/* result top */}
+            {/* result top */}
 
-        <div
-          className="
+            <div
+              className="
             mb-4
             flex items-center
             justify-between
             gap-4
             max-[600px]:items-start
           "
-        >
-          <div className="min-w-0">
-            <p
-              className="
+            >
+              <div className="min-w-0">
+                <p
+                  className="
                 text-sm
                 font-semibold
                 text-[#012D68]
               "
-            >
-              {visibleJournals.length} Journals Found
-            </p>
+                >
+                  {visibleJournals.length} Journals Found
+                </p>
 
-            <p
-              className="
+                <p
+                  className="
                 mt-1
                 text-xs
                 text-slate-400
                 max-[480px]:leading-5
               "
-            >
-              Select a journal to view complete publication details.
-            </p>
-          </div>
-        </div>
+                >
+                  Select a journal to view complete publication details.
+                </p>
+              </div>
+            </div>
 
-        {/* journal cards */}
+            {/* journal cards */}
 
-        <div className="grid gap-4">
-          {visibleJournals.map((journal, index) => (
-            <JournalCard
-              key={journal.slug}
-              journal={journal}
-              index={index}
-            />
-          ))}
+            <div className="grid gap-4">
+              {visibleJournals.map((journal, index) => (
+                <JournalCard
+                  key={journal.slug}
+                  journal={journal}
+                  index={index}
+                />
+              ))}
 
-          {visibleJournals.length === 0 && (
-            <div
-              className="
+              {visibleJournals.length === 0 && (
+                <div
+                  className="
                 rounded-[20px]
                 border
                 border-dashed
@@ -972,51 +907,51 @@ const visibleJournals = useMemo(() => {
                 max-[600px]:px-5
                 max-[600px]:py-12
               "
-            >
-              <BookOpen
-                className="
+                >
+                  <BookOpen
+                    className="
                   mx-auto size-8
                   text-[#D69B23]
                 "
-              />
+                  />
 
-              <h3
-                className="
+                  <h3
+                    className="
                   mt-4
                   font-[Fraunces]
                   text-2xl
                   text-[#012D68]
                   max-[480px]:text-xl
                 "
-              >
-                No journals found
-              </h3>
+                  >
+                    No journals found
+                  </h3>
 
-              <p
-                className="
+                  <p
+                    className="
                   mt-2
                   text-sm
                   text-slate-500
                   max-[480px]:leading-5
                 "
-              >
-                Try another subject, ISSN or indexing filter.
-              </p>
+                  >
+                    Try another subject, ISSN or indexing filter.
+                  </p>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
   );
 }
 
 export function JournalCard({ journal, index }) {
   return (
-   <Link
-  href={`/associated-journals/${journal.slug}`}
-  className="
+    <Link
+      href={`/associated-journals/${journal.slug}`}
+      className="
     group
     relative
     grid
@@ -1049,14 +984,14 @@ export function JournalCard({ journal, index }) {
     max-[380px]:grid-cols-1
     max-[380px]:gap-4
   "
-  style={{
-    animationDelay: `${index * 70}ms`,
-  }}
->
-  {/* COVER */}
+      style={{
+        animationDelay: `${index * 70}ms`,
+      }}
+    >
+      {/* COVER */}
 
-  <div
-    className="
+      <div
+        className="
       relative
       h-[165px]
       overflow-hidden
@@ -1074,25 +1009,25 @@ export function JournalCard({ journal, index }) {
       max-[380px]:h-[190px]
       max-[380px]:w-full
     "
-  >
-    <Image
-      src={journal.image || "/images/journals/default-journal.jpg"}
-      alt={journal.title}
-      fill
-      className="
+      >
+        <Image
+          src={journal.image || "/images/journals/default-journal.jpg"}
+          alt={journal.title}
+          fill
+          className="
         object-cover
         transition-transform
         duration-500
         group-hover:scale-[1.04]
       "
-    />
-  </div>
+        />
+      </div>
 
-  {/* DETAILS */}
+      {/* DETAILS */}
 
-  <div className="min-w-0">
-    <div
-      className="
+      <div className="min-w-0">
+        <div
+          className="
         mb-3 flex
         flex-wrap
         items-center
@@ -1100,10 +1035,10 @@ export function JournalCard({ journal, index }) {
 
         max-[480px]:gap-1.5
       "
-    >
-      {/* SUBJECT */}
-      <span
-        className="
+        >
+          {/* SUBJECT */}
+          <span
+            className="
           rounded-full
           bg-[#D69B23]/10
           px-3 py-1
@@ -1114,15 +1049,15 @@ export function JournalCard({ journal, index }) {
           max-[480px]:px-2.5
           max-[480px]:text-[9px]
         "
-      >
-        {journal.subject}
-      </span>
+          >
+            {journal.category.title}
+          </span>
 
-      {/* INDEXINGS */}
-      {journal.indexings?.map((indexing) => (
-        <span
-          key={indexing.id}
-          className="
+          {/* INDEXINGS */}
+          {journal.indexings?.map((indexing) => (
+            <span
+              key={indexing.id}
+              className="
             rounded-full
             bg-[#012D68]/[0.06]
             px-3 py-1
@@ -1133,31 +1068,29 @@ export function JournalCard({ journal, index }) {
             max-[480px]:px-2.5
             max-[480px]:text-[9px]
           "
-        >
-          {indexing.name}
-        </span>
-      ))}
+            >
+              {indexing.name}
+            </span>
+          ))}
 
-      {/* JOURNAL STATUS */}
-      <span
-        className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-semibold ${
-          journal.active ?
-            "bg-[#31B461]/10 text-[#168A45]"
-          : "bg-red-50 text-red-600"
-        } max-[480px]:px-2.5 max-[480px]:text-[9px]`}
-      >
-        <span
-          className={`size-1.5 shrink-0 rounded-full ${
-            journal.active ? "bg-[#31B461]" : "bg-red-500"
-          }`}
-        />
+          {/* JOURNAL STATUS */}
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-semibold ${journal.active ?
+                "bg-[#31B461]/10 text-[#168A45]"
+                : "bg-red-50 text-red-600"
+              } max-[480px]:px-2.5 max-[480px]:text-[9px]`}
+          >
+            <span
+              className={`size-1.5 shrink-0 rounded-full ${journal.active ? "bg-[#31B461]" : "bg-red-500"
+                }`}
+            />
 
-        {journal.active ? "Currently Active" : "Discontinued"}
-      </span>
-    </div>
+            {journal.active ? "Currently Active" : "Discontinued"}
+          </span>
+        </div>
 
-    <h2
-      className="
+        <h2
+          className="
         font-[Fraunces]
         text-[21px]
         font-semibold
@@ -1172,12 +1105,12 @@ export function JournalCard({ journal, index }) {
 
         max-[380px]:text-[20px]
       "
-    >
-      {journal.title}
-    </h2>
+        >
+          {journal.title}
+        </h2>
 
-    <div
-      className="
+        <div
+          className="
         mt-4 flex
         flex-wrap
         gap-x-5
@@ -1190,44 +1123,44 @@ export function JournalCard({ journal, index }) {
         max-[480px]:gap-y-1.5
         max-[480px]:text-[11px]
       "
-    >
-      <span
-        className="
+        >
+          <span
+            className="
           flex
           items-center
           gap-1.5
         "
-      >
-        <Hash
-          className="
+          >
+            <Hash
+              className="
             size-3.5
             shrink-0
             text-[#D69B23]
           "
-        />
-        ISSN: {journal.issn}
-      </span>
+            />
+            ISSN: {journal.issn}
+          </span>
 
-      <span
-        className="
+          <span
+            className="
           flex items-center
           gap-1.5
         "
-      >
-        <Building2
-          className="
+          >
+            <Building2
+              className="
             size-3.5
             shrink-0
             text-[#D69B23]
           "
-        />
+            />
 
-        {journal.publisher}
-      </span>
-    </div>
+            {journal.publisher}
+          </span>
+        </div>
 
-    <p
-      className="
+        <p
+          className="
         mt-4
         line-clamp-2
         max-w-3xl
@@ -1239,15 +1172,15 @@ export function JournalCard({ journal, index }) {
         max-[480px]:text-[11px]
         max-[480px]:leading-5
       "
-    >
-      {journal.aim}
-    </p>
-  </div>
+        >
+          {journal.aim}
+        </p>
+      </div>
 
-  {/* BUTTON */}
+      {/* BUTTON */}
 
-  <div
-    className="
+      <div
+        className="
       flex h-11 w-11
       shrink-0
       items-center
@@ -1264,23 +1197,23 @@ export function JournalCard({ journal, index }) {
 
       max-[650px]:hidden
     "
-  >
-    <ArrowRight
-      className="
+      >
+        <ArrowRight
+          className="
         size-4
         transition-transform
         group-hover:translate-x-1
       "
-    />
-  </div>
-</Link>
+        />
+      </div>
+    </Link>
   );
 }
 
 export function JournalQuickInfo({ icon, label, value }) {
   return (
-  <div
-  className="
+    <div
+      className="
     rounded-xl
     border border-[#012D68]/10
     bg-white
@@ -1297,20 +1230,20 @@ export function JournalQuickInfo({ icon, label, value }) {
     max-[480px]:px-3
     max-[480px]:py-2.5
   "
->
-  <div
-    className="
+    >
+      <div
+        className="
       flex
       min-w-0
       items-center
       gap-2
       text-[#D69B23]
     "
-  >
-    {icon}
+      >
+        {icon}
 
-    <span
-      className="
+        <span
+          className="
         min-w-0
         text-[9px]
         font-bold
@@ -1318,13 +1251,13 @@ export function JournalQuickInfo({ icon, label, value }) {
         tracking-[0.14em]
         max-[480px]:text-[8px]
       "
-    >
-      {label}
-    </span>
-  </div>
+        >
+          {label}
+        </span>
+      </div>
 
-  <p
-    className="
+      <p
+        className="
       mt-1.5
       truncate
       text-sm
@@ -1332,9 +1265,9 @@ export function JournalQuickInfo({ icon, label, value }) {
       text-[#012D68]
       max-[480px]:text-[13px]
     "
-  >
-    {value || "—"}
-  </p>
-</div>
+      >
+        {value || "—"}
+      </p>
+    </div>
   );
 }
